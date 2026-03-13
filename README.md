@@ -30,3 +30,5 @@ npm run preview
 - `src/pages/montaz-i-pomiar.astro`
 - `src/pages/oferta-cenowa.astro`
 - `src/pages/pobierz-aplikacje.astro`
+- `src/pages/polityka-prywatnosci.astro`
+- `src/pages/regulamin.astro`

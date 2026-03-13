@@ -1,0 +1,16 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+<MainLayout title="Drzwi wewnętrzne | Expert Doors" description="Montaż drzwi wewnętrznych z ościeżnicami i regulacją.">
+  <main class="container">
+    <section>
+      <h1>Drzwi wewnętrzne</h1>
+      <p class="lead">Oferujemy montaż drzwi wewnętrznych do mieszkań, domów i lokali użytkowych. Pracujemy na ościeżnicach stałych i regulowanych oraz dbamy o estetyczne wykończenie przejść.</p>
+      <div class="panel">
+        <h2 class="section-title">Profesjonalne wykonanie</h2>
+        <p>Precyzyjny pomiar pionów i poziomów, osadzenie ościeżnicy, montaż skrzydła, klamek i okuć oraz regulacja domykania. Dzięki temu drzwi pracują płynnie i zachowują trwałość przez lata.</p>
+        <div class="cta-row"><a class="btn primary" href="/expert-doors#formularz">Umów montaż</a><a class="btn secondary" href="/montaz-i-pomiar">Montaż i pomiar</a></div>
+      </div>
+    </section>
+  </main>
+</MainLayout>

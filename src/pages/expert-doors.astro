@@ -8,12 +8,12 @@ const googleScriptUrl =
 
 <MainLayout
   title="Expert Doors | Montaż drzwi i bram garażowych"
-  description="Expert Doors: montaż drzwi i bram garażowych w Szczecinie i okolicach. Pobierz aplikację Android i wyślij zlecenie online."
+  description="Expert Doors: montaż drzwi i bram garażowych w Szczecinie i okolicach. Zobacz ofertę usług, cennik i pobierz aplikację Android."
 >
   <header>
     <div class="container nav">
       <div class="brand">Expert <span>Doors</span></div>
-      <a href="#aplikacja" class="btn secondary">Pobierz aplikację</a>
+      <a href="/pobierz-aplikacje" class="btn secondary">Pobierz aplikację</a>
     </div>
   </header>
 
@@ -27,53 +27,50 @@ const googleScriptUrl =
         </p>
         <div class="cta-row">
           <a class="btn primary" href="#formularz">Wyślij zlecenie online</a>
-          <a class="btn secondary" href="#realizacje">Zobacz realizacje</a>
+          <a class="btn secondary" href="/oferta-cenowa">Oferta cenowa</a>
         </div>
       </div>
       <OrbitGarageLogo />
     </section>
 
     <section id="oferta">
-      <h2 class="section-title">Nasza oferta</h2>
+      <h2 class="section-title">Nasze podstrony usług</h2>
       <div class="grid">
         <article class="card">
           <h3>Drzwi wejściowe</h3>
           <p>Montaż drzwi stalowych, aluminiowych i antywłamaniowych.</p>
+          <a class="btn secondary" href="/drzwi-wejsciowe">Zobacz usługę</a>
+        </article>
+        <article class="card">
+          <h3>Drzwi segmentowe</h3>
+          <p>Nowoczesne bramy segmentowe z automatyką i bezpieczeństwem.</p>
+          <a class="btn secondary" href="/drzwi-segmentowe">Zobacz usługę</a>
         </article>
         <article class="card">
           <h3>Drzwi wewnętrzne</h3>
           <p>Ościeżnice, skrzydła, regulacja i estetyczne wykończenie.</p>
+          <a class="btn secondary" href="/drzwi-wewnetrzne">Zobacz usługę</a>
         </article>
         <article class="card">
-          <h3>Bramy garażowe</h3>
-          <p>Bramy segmentowe, rolowane i uchylne z automatyką.</p>
+          <h3>Automatyka bram</h3>
+          <p>Napędy, piloty, czujniki bezpieczeństwa i konfiguracja sterowań.</p>
+          <a class="btn secondary" href="/automatyka-bram">Zobacz usługę</a>
         </article>
         <article class="card">
-          <h3>Serwis</h3>
-          <p>Przeglądy, regulacja oraz naprawy drzwi i bram.</p>
+          <h3>Serwis i regulacje</h3>
+          <p>Przeglądy okresowe, awarie i precyzyjna regulacja mechaniki.</p>
+          <a class="btn secondary" href="/serwis-i-regulacje">Zobacz usługę</a>
         </article>
-      </div>
-    </section>
-
-    <section id="aplikacja">
-      <div class="panel">
-        <h2 class="section-title">Aplikacja Expert Doors (Android)</h2>
-        <p>
-          Klienci mogą wysyłać zlecenia także przez aplikację. Link poniżej podłącz do finalnego
-          pliku APK.
-        </p>
-        <div class="cta-row">
-          <a class="btn primary" href="/app/expert-doors.apk">Pobierz aplikację (APK)</a>
-          <a class="btn secondary" href="#formularz">Wyślij zlecenie przez formularz</a>
-        </div>
+        <article class="card">
+          <h3>Montaż i pomiar</h3>
+          <p>Dokładny pomiar na miejscu i profesjonalny montaż zgodny z normami.</p>
+          <a class="btn secondary" href="/montaz-i-pomiar">Zobacz usługę</a>
+        </article>
       </div>
     </section>
 
     <section id="realizacje">
-      <h2 class="section-title">Oferujemy</h2>
-      <p class="lead">
-       
-      </p>
+      <h2 class="section-title">Przykładowe realizacje (placeholdery)</h2>
       <div class="gallery">
         <img src="/images/expert-doors/gallery-1.svg" alt="Realizacja 1" loading="lazy" />
         <img src="/images/expert-doors/gallery-2.svg" alt="Realizacja 2" loading="lazy" />
@@ -100,10 +97,11 @@ const googleScriptUrl =
             <select name="service" required>
               <option value="">Wybierz usługę</option>
               <option>Montaż drzwi wejściowych</option>
+              <option>Montaż drzwi segmentowych</option>
               <option>Montaż drzwi wewnętrznych</option>
-              <option>Montaż bramy garażowej</option>
-              <option>Serwis / regulacja</option>
-              <option>Inne</option>
+              <option>Automatyka bram</option>
+              <option>Serwis i regulacje</option>
+              <option>Montaż i pomiar</option>
             </select>
           </label>
           <label>

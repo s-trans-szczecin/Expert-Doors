@@ -18,9 +18,15 @@ npm run preview
 
 ## Struktura
 
-- `src/components/OrbitGarageLogo.astro` – animowane logo (orbita + garaż + auto)
+- `src/components/OrbitGarageLogo.astro` – animowane logo
 - `src/layouts/MainLayout.astro` – główny layout strony
 - `src/styles/globals.css` – globalne style
-- `src/pages/index.astro` – redirect na `/expert-doors`
-- `src/pages/expert-doors.astro` – główna strona landingowa
-- `public/images/expert-doors/` – grafiki placeholder do galerii
+- `src/pages/expert-doors.astro` – strona główna
+- `src/pages/drzwi-wejsciowe.astro`
+- `src/pages/drzwi-segmentowe.astro`
+- `src/pages/drzwi-wewnetrzne.astro`
+- `src/pages/automatyka-bram.astro`
+- `src/pages/serwis-i-regulacje.astro`
+- `src/pages/montaz-i-pomiar.astro`
+- `src/pages/oferta-cenowa.astro`
+- `src/pages/pobierz-aplikacje.astro`

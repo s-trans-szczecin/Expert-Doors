@@ -110,6 +110,14 @@ footer {
   aspect-ratio: 1 / 1;
   display: grid;
   place-items: center;
+  isolation: isolate;
+}
+
+.orbit-shell {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  animation: orbit-rotate 4.2s linear infinite;
 }
 
 .orbit-ring {
@@ -117,22 +125,28 @@ footer {
   inset: 0;
   border: 1px dashed rgba(245, 158, 11, 0.45);
   border-radius: 50%;
-  animation: spin 12s linear infinite;
+  transform: rotateX(66deg);
+  opacity: .7;
 }
 
-.orbit-ring span {
+.orbit-label {
   position: absolute;
-  top: -18px;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
   color: var(--primary);
   font-weight: 700;
   letter-spacing: .6px;
   white-space: nowrap;
   font-size: .9rem;
   background: rgba(2, 6, 23, .9);
-  padding: .2rem .5rem;
+  padding: .28rem .7rem;
   border-radius: 999px;
+  border: 1px solid rgba(245, 158, 11, .45);
+  box-shadow: 0 0 20px rgba(245, 158, 11, .2);
+  transform: translate(-50%, -50%) translateY(-152px) rotate(0deg);
+  transform-origin: center 152px;
+  animation: orbit-label-counter 4.2s linear infinite;
+  z-index: 1;
 }
 
 .garage-scene {
@@ -143,6 +157,7 @@ footer {
   background: linear-gradient(180deg, #1e293b, #0b1222);
   display: grid;
   place-items: center;
+  z-index: 3;
 }
 
 .garage-box {
@@ -180,19 +195,51 @@ footer {
 
 .car {
   position: absolute;
-  left: -110px;
+  left: -118px;
   bottom: 0;
-  width: 94px;
-  height: 40px;
+  width: 122px;
+  height: 42px;
   animation: car-drive 6s ease-in-out infinite;
+  filter: drop-shadow(0 4px 10px rgba(239, 68, 68, .35));
 }
 
 .car-body {
   position: absolute;
-  inset: 10px 0 6px 0;
-  background: #38bdf8;
-  border-radius: 8px 18px 8px 8px;
-  border: 2px solid #e2e8f0;
+  inset: 14px 0 3px 0;
+  background: linear-gradient(135deg, #ff3b30 0%, #b10f0f 55%, #7f0d0d 100%);
+  border-radius: 10px 30px 8px 18px;
+  border: 2px solid #ffd4d4;
+}
+
+.car-cockpit {
+  position: absolute;
+  left: 38px;
+  top: 4px;
+  width: 52px;
+  height: 15px;
+  border-radius: 18px 18px 10px 10px;
+  background: linear-gradient(180deg, #111827 0%, #334155 100%);
+  border: 1px solid #cbd5e1;
+}
+
+.car-spoiler {
+  position: absolute;
+  left: 4px;
+  top: 10px;
+  width: 24px;
+  height: 4px;
+  border-radius: 4px;
+  background: #f8fafc;
+}
+
+.car-front-wing {
+  position: absolute;
+  right: -6px;
+  top: 20px;
+  width: 18px;
+  height: 7px;
+  border-radius: 0 6px 6px 0;
+  background: #fecaca;
 }
 
 .wheel {
@@ -204,12 +251,37 @@ footer {
   background: #111827;
   border: 2px solid #e2e8f0;
 }
-.wheel.left { left: 12px; }
-.wheel.right { right: 12px; }
+.wheel.left { left: 14px; }
+.wheel.right { right: 14px; }
 
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+@keyframes orbit-rotate {
+  0% { transform: rotate(0deg); }
+  49% { z-index: 1; }
+  50% { z-index: 5; }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes orbit-label-counter {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg) translateY(-152px) rotate(0deg) scale(.84);
+    opacity: .42;
+  }
+  25% {
+    transform: translate(-50%, -50%) rotate(-90deg) translateY(-152px) rotate(90deg) scale(.92);
+    opacity: .74;
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(-180deg) translateY(-152px) rotate(180deg) scale(1.08);
+    opacity: 1;
+  }
+  75% {
+    transform: translate(-50%, -50%) rotate(-270deg) translateY(-152px) rotate(270deg) scale(.92);
+    opacity: .74;
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(-360deg) translateY(-152px) rotate(360deg) scale(.84);
+    opacity: .42;
+  }
 }
 
 @keyframes garage-open {

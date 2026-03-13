@@ -15,7 +15,10 @@
 body {
   margin: 0;
   font-family: Inter, system-ui, sans-serif;
-  background: radial-gradient(circle at top, #1e293b 0%, var(--bg) 50%, #020617 100%);
+  background:
+    linear-gradient(rgba(2, 6, 23, 0.82), rgba(2, 6, 23, 0.88)),
+    radial-gradient(circle at top, #1e293b 0%, var(--bg) 50%, #020617 100%),
+    url('/images/expert-doors/hero-door.svg') center / cover no-repeat fixed;
   color: var(--text);
   line-height: 1.65;
 }

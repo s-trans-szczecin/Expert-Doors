@@ -16,10 +16,10 @@ body {
   margin: 0;
   font-family: Inter, system-ui, sans-serif;
   background:
-    linear-gradient(rgba(2, 6, 23, 0.82), rgba(2, 6, 23, 0.88)),
-    radial-gradient(circle at top, #1e293b 0%, var(--bg) 50%, #020617 100%),
-    url('/images/expert-doors/tlo-drzwi-i-bramy.png') center / contain no-repeat fixed,
-    url('/images/expert-doors/hero-door.svg') center / cover no-repeat fixed;
+    linear-gradient(rgba(2, 6, 23, 0.58), rgba(2, 6, 23, 0.72)),
+    radial-gradient(circle at top, rgba(30, 41, 59, 0.72) 0%, var(--bg) 52%, #020617 100%),
+    url('/images/expert-doors/tlo-drzwi-i-bramy.png') center 28% / min(980px, 78vw) auto no-repeat fixed,
+    #020617;
   color: var(--text);
   line-height: 1.65;
 }
@@ -120,17 +120,19 @@ footer {
 .orbit-shell {
   position: absolute;
   inset: 0;
-  transform-style: preserve-3d;
-  animation: orbit-rotate 4.2s linear infinite;
+  pointer-events: none;
 }
 
 .orbit-ring {
   position: absolute;
-  inset: 0;
+  left: 9%;
+  right: 9%;
+  top: 36%;
+  height: 28%;
   border: 1px dashed rgba(245, 158, 11, 0.45);
   border-radius: 50%;
-  transform: rotateX(66deg);
-  opacity: .7;
+  transform: rotate(-8deg);
+  opacity: .68;
 }
 
 .orbit-label {
@@ -142,15 +144,21 @@ footer {
   letter-spacing: .6px;
   white-space: nowrap;
   font-size: .9rem;
-  background: rgba(2, 6, 23, .9);
+  background: rgba(2, 6, 23, .92);
   padding: .28rem .7rem;
   border-radius: 999px;
   border: 1px solid rgba(245, 158, 11, .45);
   box-shadow: 0 0 20px rgba(245, 158, 11, .2);
-  transform: translate(-50%, -50%) translateY(-152px) rotate(0deg);
-  transform-origin: center 152px;
-  animation: orbit-label-counter 4.2s linear infinite;
+}
+
+.orbit-label--back {
   z-index: 1;
+  animation: orbit-pass-behind 6s linear infinite;
+}
+
+.orbit-label--front {
+  z-index: 5;
+  animation: orbit-pass-front 6s linear infinite;
 }
 
 .garage-scene {
@@ -258,33 +266,53 @@ footer {
 .wheel.left { left: 14px; }
 .wheel.right { right: 14px; }
 
-@keyframes orbit-rotate {
-  0% { transform: rotate(0deg); }
-  49% { z-index: 1; }
-  50% { z-index: 5; }
-  100% { transform: rotate(360deg); }
-}
-
-@keyframes orbit-label-counter {
+@keyframes orbit-pass-behind {
   0% {
-    transform: translate(-50%, -50%) rotate(0deg) translateY(-152px) rotate(0deg) scale(.84);
-    opacity: .42;
+    transform: translate(-50%, -50%) translate(-178px, -28px) scale(.86);
+    opacity: .78;
   }
-  25% {
-    transform: translate(-50%, -50%) rotate(-90deg) translateY(-152px) rotate(90deg) scale(.92);
-    opacity: .74;
+  20% {
+    transform: translate(-50%, -50%) translate(-96px, -18px) scale(.9);
+    opacity: .66;
   }
-  50% {
-    transform: translate(-50%, -50%) rotate(-180deg) translateY(-152px) rotate(180deg) scale(1.08);
-    opacity: 1;
+  30% {
+    transform: translate(-50%, -50%) translate(-56px, -10px) scale(.94);
+    opacity: 0;
   }
-  75% {
-    transform: translate(-50%, -50%) rotate(-270deg) translateY(-152px) rotate(270deg) scale(.92);
-    opacity: .74;
+  70% {
+    transform: translate(-50%, -50%) translate(56px, -10px) scale(.94);
+    opacity: 0;
+  }
+  80% {
+    transform: translate(-50%, -50%) translate(96px, -18px) scale(.9);
+    opacity: .66;
   }
   100% {
-    transform: translate(-50%, -50%) rotate(-360deg) translateY(-152px) rotate(360deg) scale(.84);
-    opacity: .42;
+    transform: translate(-50%, -50%) translate(178px, -28px) scale(.86);
+    opacity: .78;
+  }
+}
+
+@keyframes orbit-pass-front {
+  0%, 22% {
+    transform: translate(-50%, -50%) translate(-178px, 18px) scale(.94);
+    opacity: 0;
+  }
+  32% {
+    transform: translate(-50%, -50%) translate(-92px, 6px) scale(1);
+    opacity: .86;
+  }
+  50% {
+    transform: translate(-50%, -50%) translate(0, -4px) scale(1.08);
+    opacity: 1;
+  }
+  68% {
+    transform: translate(-50%, -50%) translate(92px, 6px) scale(1);
+    opacity: .86;
+  }
+  78%, 100% {
+    transform: translate(-50%, -50%) translate(178px, 18px) scale(.94);
+    opacity: 0;
   }
 }
 
@@ -299,6 +327,28 @@ footer {
   44%, 55% { transform: translateX(230px); opacity: 1; }
   68%, 86% { transform: translateX(365px); opacity: 1; }
   100% { transform: translateX(520px); opacity: 0; }
+}
+
+
+.service-gallery {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: .8rem;
+}
+
+.service-gallery img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  display: block;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+}
+
+.note {
+  color: var(--muted);
+  font-size: .95rem;
 }
 
 @media (max-width: 900px) {

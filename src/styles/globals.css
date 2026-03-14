@@ -15,10 +15,7 @@
 body {
   margin: 0;
   font-family: Inter, system-ui, sans-serif;
-  background:
-    linear-gradient(rgba(2, 6, 23, 0.58), rgba(2, 6, 23, 0.72)),
-    radial-gradient(circle at top, rgba(30, 41, 59, 0.72) 0%, var(--bg) 52%, #020617 100%),
-    url('/images/expert-doors/tlo-drzwi-i-bramy.png') center 28% / min(980px, 78vw) auto no-repeat fixed,
+  background: url('/images/expert-doors/tlo-drzwi-i-bramy.png') center 28% / min(980px, 78vw) auto no-repeat fixed,
     #020617;
   color: var(--text);
   line-height: 1.65;
@@ -45,6 +42,14 @@ header {
   grid-template-columns: 1.1fr 1fr;
   align-items: center;
   gap: 1.5rem;
+}
+
+.hero > div:first-child {
+  background: rgba(15, 23, 42, 0.42);
+  border: 1px solid rgba(203, 213, 225, 0.22);
+  border-radius: 16px;
+  padding: 1.2rem;
+  backdrop-filter: blur(8px) saturate(120%);
 }
 
 h1 { margin: 0; font-size: clamp(2rem, 5vw, 3.25rem); line-height: 1.15; }
@@ -78,13 +83,23 @@ section { padding: 2.2rem 0; }
 .section-title { margin: 0 0 1rem; font-size: clamp(1.4rem, 3vw, 2rem); }
 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 1rem; }
 .card, .panel {
-  background: linear-gradient(180deg, rgba(51,65,85,.28), rgba(15,23,42,.75));
-  border: 1px solid var(--line);
+  background: rgba(15, 23, 42, 0.46);
+  border: 1px solid rgba(203, 213, 225, 0.24);
   border-radius: 14px;
   padding: 1rem;
+  backdrop-filter: blur(9px) saturate(120%);
 }
 .card p, .panel p { color: var(--muted); }
 .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: .8rem; }
+
+section > h1,
+section > .lead {
+  background: rgba(15, 23, 42, 0.38);
+  border: 1px solid rgba(203, 213, 225, 0.2);
+  border-radius: 14px;
+  padding: .75rem 1rem;
+  backdrop-filter: blur(8px);
+}
 
 form { display: grid; gap: .8rem; }
 label { display: grid; gap: .35rem; font-weight: 600; }

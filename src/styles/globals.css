@@ -139,7 +139,7 @@ footer {
 
 /* Animated logo */
 .orbit-logo {
-  width: min(100%, 300px);
+  width: min(100%, 120px);
   margin-inline: auto;
   position: relative;
   aspect-ratio: 1 / 1;
@@ -148,7 +148,7 @@ footer {
   isolation: isolate;
   justify-self: end;
   align-self: start;
-  margin-top: -.4rem;
+  margin-top: -1.1rem;
 }
 
 .orbit-shell {
@@ -159,10 +159,10 @@ footer {
 
 .orbit-ring {
   position: absolute;
-  left: 9%;
-  right: 9%;
-  top: 36%;
-  height: 28%;
+  left: 8%;
+  right: 8%;
+  top: 34%;
+  height: 30%;
   border: 1px dashed rgba(245, 158, 11, 0.45);
   border-radius: 50%;
   transform: rotate(-8deg);
@@ -177,9 +177,9 @@ footer {
   font-weight: 700;
   letter-spacing: .6px;
   white-space: nowrap;
-  font-size: .9rem;
+  font-size: .46rem;
   background: rgba(2, 6, 23, .92);
-  padding: .28rem .7rem;
+  padding: .14rem .32rem;
   border-radius: 999px;
   border: 1px solid rgba(245, 158, 11, .45);
   box-shadow: 0 0 20px rgba(245, 158, 11, .2);
@@ -187,17 +187,23 @@ footer {
 
 .orbit-label--back {
   z-index: 1;
-  animation: orbit-pass-behind 7s linear infinite;
+  animation: orbit-pass-behind 5.2s linear infinite;
 }
 
 .orbit-label--front {
   z-index: 5;
-  animation: orbit-pass-front 7s linear infinite;
+  animation: orbit-pass-front 5.2s linear infinite;
 }
 
 .logo-initial {
   color: #ef4444;
   font-weight: 800;
+}
+
+.orbit-dot {
+  color: #f97316;
+  font-weight: 900;
+  margin: 0 .2rem;
 }
 
 .garage-scene {
@@ -306,20 +312,17 @@ footer {
 .wheel.right { right: 14px; }
 
 @keyframes orbit-pass-behind {
-  0% { transform: translate(-50%, -50%) translate(-168px, -24px) scale(.88); opacity: .72; }
-  18% { transform: translate(-50%, -50%) translate(-102px, -17px) scale(.92); opacity: .62; }
-  30% { transform: translate(-50%, -50%) translate(-62px, -11px) scale(.95); opacity: .08; }
-  70% { transform: translate(-50%, -50%) translate(62px, -11px) scale(.95); opacity: .08; }
-  82% { transform: translate(-50%, -50%) translate(102px, -17px) scale(.92); opacity: .62; }
-  100% { transform: translate(-50%, -50%) translate(168px, -24px) scale(.88); opacity: .72; }
+  0% { transform: translate(-50%, -50%) translate(-64px, -2px) scale(.9); opacity: .65; }
+  25% { transform: translate(-50%, -50%) translate(0, -15px) scale(.84); opacity: .48; }
+  50% { transform: translate(-50%, -50%) translate(64px, -2px) scale(.9); opacity: .65; }
+  51%, 100% { transform: translate(-50%, -50%) translate(-64px, -2px) scale(.9); opacity: 0; }
 }
 
 @keyframes orbit-pass-front {
-  0%, 24% { transform: translate(-50%, -50%) translate(-168px, 14px) scale(.94); opacity: 0; }
-  34% { transform: translate(-50%, -50%) translate(-92px, 4px) scale(1.01); opacity: .88; }
-  50% { transform: translate(-50%, -50%) translate(0, -2px) scale(1.1); opacity: 1; }
-  66% { transform: translate(-50%, -50%) translate(92px, 4px) scale(1.01); opacity: .88; }
-  76%, 100% { transform: translate(-50%, -50%) translate(168px, 14px) scale(.94); opacity: 0; }
+  0%, 49% { transform: translate(-50%, -50%) translate(64px, 3px) scale(.9); opacity: 0; }
+  50% { transform: translate(-50%, -50%) translate(64px, 3px) scale(.9); opacity: .75; }
+  75% { transform: translate(-50%, -50%) translate(0, 15px) scale(1.04); opacity: 1; }
+  100% { transform: translate(-50%, -50%) translate(-64px, 3px) scale(.9); opacity: .75; }
 }
 
 @keyframes garage-open {
@@ -358,5 +361,5 @@ footer {
 
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; }
-  .orbit-logo { justify-self: center; margin-top: .4rem; width: min(100%, 250px); }
+  .orbit-logo { justify-self: center; margin-top: .2rem; width: min(100%, 120px); }
 }

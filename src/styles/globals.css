@@ -252,10 +252,10 @@ footer {
 
 .car {
   position: absolute;
-  left: -118px;
-  bottom: 0;
-  width: 122px;
-  height: 42px;
+  left: -86px;
+  bottom: 2px;
+  width: 72px;
+  height: 26px;
   animation: car-drive 6s ease-in-out infinite;
   filter: drop-shadow(0 4px 10px rgba(239, 68, 68, .35));
 }
@@ -302,14 +302,14 @@ footer {
 .wheel {
   position: absolute;
   bottom: 0;
-  width: 14px;
-  height: 14px;
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
   background: #111827;
   border: 2px solid #e2e8f0;
 }
-.wheel.left { left: 14px; }
-.wheel.right { right: 14px; }
+.wheel.left { left: 10px; }
+.wheel.right { right: 10px; }
 
 @keyframes orbit-pass-behind {
   0% { transform: translate(-50%, -50%) translate(-64px, -2px) scale(.9); opacity: .65; }

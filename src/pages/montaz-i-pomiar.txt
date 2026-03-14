@@ -1,0 +1,29 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+<MainLayout title="Montaż i pomiar | Expert Doors" description="Dokładny pomiar i profesjonalny montaż drzwi oraz bram.">
+  <main class="container">
+    <section>
+      <h1>Montaż i pomiar</h1>
+      <p class="lead">Każdą realizację zaczynamy od dokładnego pomiaru na miejscu. To podstawa bezproblemowego montażu, prawidłowej pracy skrzydła i szczelności całego systemu.</p>
+      <div class="panel">
+        <h2 class="section-title">Jak wygląda proces?</h2>
+        <p>Najpierw pomiar i konsultacja, następnie dobór rozwiązania, termin montażu i realizacja wraz z regulacją końcową. Po zakończeniu przekazujemy zalecenia użytkowe i serwisowe.</p>
+        <h3>Zastosowanie</h3>
+        <p>Dokładny pomiar i właściwy montaż są kluczowe przy wszystkich typach drzwi i bram garażowych – zarówno w nowych inwestycjach, jak i przy wymianie istniejącej stolarki.</p>
+        <h3>Co oferujemy</h3>
+        <p>Weryfikację warunków technicznych na miejscu, precyzyjne pomiary, dobór systemu montażowego, montaż właściwy oraz pełną regulację końcową. Przekazujemy też instrukcję użytkowania i harmonogram serwisowy.</p>
+        <div class="cta-row"><a class="btn primary" href="/expert-doors#formularz">Umów pomiar</a><a class="btn secondary" href="/drzwi-wejsciowe">Drzwi wejściowe</a></div>
+
+        <p class="note">Przykładowe inspiracje wizualne dla tej kategorii (oferta: Castorama Polska).</p>
+        <div class="service-gallery">
+          <img src="/images/expert-doors/castorama/montaz-i-pomiar-1.svg" alt="montaz-i-pomiar inspiracja 1" loading="lazy" />
+          <img src="/images/expert-doors/castorama/montaz-i-pomiar-2.svg" alt="montaz-i-pomiar inspiracja 2" loading="lazy" />
+          <img src="/images/expert-doors/castorama/montaz-i-pomiar-3.svg" alt="montaz-i-pomiar inspiracja 3" loading="lazy" />
+        </div>
+        <div class="cta-row"><a class="btn secondary" href="https://www.castorama.pl/szukaj.html?query=akcesoria%20monta%C5%BCowe%20do%20drzwi" target="_blank" rel="noopener noreferrer">Zobacz produkty w Castorama Polska</a></div>
+
+      </div>
+    </section>
+  </main>
+</MainLayout>

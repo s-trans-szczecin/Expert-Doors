@@ -16,7 +16,7 @@ body {
   margin: 0;
   font-family: Inter, system-ui, sans-serif;
   background: url('/images/expert-doors/tlo-drzwi-i-bramy.png') center 28% / min(980px, 78vw) auto no-repeat fixed,
-    #020617;
+    #0b1730;
   color: var(--text);
   line-height: 1.65;
 }
@@ -174,7 +174,7 @@ section { padding: 2.2rem 0; }
 .section-title { margin: 0 0 1rem; font-size: clamp(1.4rem, 3vw, 2rem); }
 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 1rem; }
 .card, .panel {
-  background: rgba(15, 23, 42, 0.46);
+  background: rgba(30, 41, 59, 0.56);
   border: 1px solid rgba(203, 213, 225, 0.24);
   border-radius: 14px;
   padding: 1rem;
@@ -545,7 +545,7 @@ footer {
 
 .realization-card {
   margin: 0;
-  background: rgba(15, 23, 42, 0.46);
+  background: rgba(30, 41, 59, 0.56);
   border: 1px solid rgba(203, 213, 225, 0.24);
   border-radius: 14px;
   overflow: hidden;
@@ -587,13 +587,13 @@ footer {
 
 .ai-chatbot {
   position: fixed;
-  right: 1rem;
-  bottom: 1rem;
+  left: 8.4rem;
+  bottom: .95rem;
   z-index: 1100;
-  width: min(340px, calc(100vw - 1.5rem));
+  width: min(300px, calc(100vw - 10rem));
   display: grid;
-  justify-items: end;
-  gap: .55rem;
+  justify-items: start;
+  gap: .45rem;
 }
 
 .ai-chatbot__toggle {
@@ -601,14 +601,16 @@ footer {
   background: linear-gradient(145deg, rgba(245, 158, 11, .95), rgba(234, 88, 12, .95));
   color: #111827;
   border-radius: 999px;
-  padding: .58rem 1rem;
+  padding: .4rem .7rem;
+  font-size: .85rem;
   font-weight: 800;
   cursor: pointer;
-  box-shadow: 0 12px 30px rgba(245, 158, 11, .35);
+  box-shadow: 0 10px 24px rgba(245, 158, 11, .35);
 }
 
 .ai-chatbot__panel {
   width: 100%;
+  box-shadow: 0 16px 36px rgba(2, 6, 23, .45);
   background: rgba(2, 6, 23, .95);
   border: 1px solid rgba(203, 213, 225, .3);
   border-radius: 16px;
@@ -618,6 +620,8 @@ footer {
   min-height: 360px;
   max-height: 72vh;
 }
+
+.ai-chatbot__panel[hidden] { display: none !important; }
 
 .ai-chatbot__header {
   display: flex;
@@ -685,13 +689,55 @@ footer {
 
 @media (max-width: 900px) {
   .ai-chatbot {
-    right: .65rem;
-    bottom: 4rem;
-    width: min(340px, calc(100vw - 1.3rem));
+    left: 7.15rem;
+    bottom: .62rem;
+    width: min(300px, calc(100vw - 8rem));
   }
 
   .ai-chatbot__panel {
-    min-height: 330px;
-    max-height: 62vh;
+    min-height: 280px;
+    max-height: 52vh;
+  }
+}
+
+.cookie-banner {
+  position: fixed;
+  left: 50%;
+  bottom: 1rem;
+  transform: translateX(-50%);
+  width: min(620px, calc(100vw - 2rem));
+  z-index: 1400;
+  background: rgba(15, 23, 42, .95);
+  border: 1px solid rgba(203, 213, 225, .3);
+  border-radius: 12px;
+  padding: .65rem .8rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .8rem;
+}
+
+.cookie-banner[hidden] { display: none !important; }
+
+.cookie-banner p {
+  margin: 0;
+  color: var(--text);
+  font-size: .92rem;
+}
+
+.cookie-banner button {
+  border: 1px solid rgba(245, 158, 11, .8);
+  background: rgba(245, 158, 11, .95);
+  color: #111827;
+  border-radius: 10px;
+  padding: .5rem .8rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@media (max-width: 700px) {
+  .cookie-banner {
+    flex-direction: column;
+    align-items: stretch;
   }
 }

@@ -175,7 +175,10 @@ const googleScriptUrl =
       <div class="cta-row" style="margin-top:.8rem;">
         <a class="btn secondary" href="/polityka-prywatnosci">Polityka prywatności</a>
         <a class="btn secondary" href="/regulamin">Regulamin</a>
+        <a class="btn primary" href="tel:+48533801953">📞 Zadzwoń: +48 533 801 953</a>
+        <a class="btn secondary" href="mailto:s.trans.szczecin@gmail.com">✉️ Napisz e-mail</a>
       </div>
+      <p class="note" style="margin-top:.65rem;">Aby zmienić adres e-mail w przyszłości, podmień `mailto:` w pliku `src/pages/expert-doors.astro`.</p>
     </div>
   </footer>
 </MainLayout>
@@ -204,8 +207,9 @@ const googleScriptUrl =
     const payload = Object.fromEntries(new FormData(orderForm).entries());
 
     try {
-      const response = await fetch(orderForm.action, {
+      await fetch(orderForm.action, {
         method: 'POST',
+        mode: 'no-cors',
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
@@ -213,12 +217,8 @@ const googleScriptUrl =
         body: JSON.stringify(payload),
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
-
       if (orderStatus) {
-        orderStatus.textContent = 'Dziękujemy! Zgłoszenie zostało wysłane poprawnie.';
+        orderStatus.textContent = 'Dziękujemy! Zgłoszenie zostało wysłane. Jeśli nie otrzymasz odpowiedzi, zadzwoń do nas.';
         orderStatus.className = 'form-status success';
       }
 

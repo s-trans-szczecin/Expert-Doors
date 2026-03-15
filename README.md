@@ -64,3 +64,15 @@ Najczęściej edytowane pliki:
 - `src/pages/montaz-i-pomiar.astro`
 
 W każdym z nich podmień adres w `href` na docelowy URL, np. do wybranej kategorii lub konkretnej oferty.
+
+
+### 3) Jak zmienić adres e-mail przycisku kontaktowego
+Przycisk e-mail na stronie głównej jest w pliku:
+
+- `src/pages/expert-doors.astro`
+
+Znajdź link typu:
+
+- `href="mailto:s.trans.szczecin@gmail.com"`
+
+i podmień adres po `mailto:` na nowy firmowy e-mail.

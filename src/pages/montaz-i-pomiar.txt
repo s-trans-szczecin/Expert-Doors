@@ -15,11 +15,17 @@ import MainLayout from '../layouts/MainLayout.astro';
         <p>Weryfikację warunków technicznych na miejscu, precyzyjne pomiary, dobór systemu montażowego, montaż właściwy oraz pełną regulację końcową. Przekazujemy też instrukcję użytkowania i harmonogram serwisowy.</p>
         <div class="cta-row"><a class="btn primary" href="/expert-doors#formularz">Umów pomiar</a><a class="btn secondary" href="/drzwi-wejsciowe">Drzwi wejściowe</a></div>
 
-        <p class="note">Przykładowe inspiracje wizualne dla tej kategorii (oferta: Castorama Polska).</p>
+        <p class="note">Przykładowe inspiracje i wizualizacje dla tej kategorii (oferta: Castorama Polska).</p>
         <div class="service-gallery">
+          <a href="https://www.castorama.pl/szukaj.html?query=akcesoria%20monta%C5%BCowe%20do%20drzwi" target="_blank" rel="noopener noreferrer">
           <img src="/images/expert-doors/castorama/montaz-i-pomiar-1.svg" alt="montaz-i-pomiar inspiracja 1" loading="lazy" />
+          </a>
+          <a href="https://www.castorama.pl/szukaj.html?query=akcesoria%20monta%C5%BCowe%20do%20drzwi" target="_blank" rel="noopener noreferrer">
           <img src="/images/expert-doors/castorama/montaz-i-pomiar-2.svg" alt="montaz-i-pomiar inspiracja 2" loading="lazy" />
+          </a>
+          <a href="https://www.castorama.pl/szukaj.html?query=akcesoria%20monta%C5%BCowe%20do%20drzwi" target="_blank" rel="noopener noreferrer">
           <img src="/images/expert-doors/castorama/montaz-i-pomiar-3.svg" alt="montaz-i-pomiar inspiracja 3" loading="lazy" />
+          </a>
         </div>
         <div class="cta-row"><a class="btn secondary" href="https://www.castorama.pl/szukaj.html?query=akcesoria%20monta%C5%BCowe%20do%20drzwi" target="_blank" rel="noopener noreferrer">Zobacz produkty w Castorama Polska</a></div>
 

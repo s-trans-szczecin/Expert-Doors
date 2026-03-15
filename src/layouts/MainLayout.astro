@@ -4,11 +4,13 @@ import '../styles/globals.css';
 interface Props {
   title?: string;
   description?: string;
+  keywords?: string;
 }
 
 const {
   title = 'Expert Doors | Montaż drzwi i bram garażowych',
-  description = 'Expert Doors — montaż drzwi i bram garażowych w Szczecinie i okolicach.',
+  description = 'Expert Doors — montaż drzwi i bram garażowych w Szczecinie i województwie zachodniopomorskim.',
+  keywords = 'montaż drzwi Szczecin, bramy garażowe Szczecin, Expert Doors Szczecin, serwis bram Szczecin, drzwi wejściowe Szczecin, zachodniopomorskie',
 } = Astro.props;
 ---
 
@@ -19,9 +21,101 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="robots" content="index, follow" />
+    <meta name="geo.region" content="PL-ZP" />
+    <meta name="geo.placename" content="Szczecin" />
+    <meta name="geo.position" content="53.4285;14.5528" />
+    <meta name="ICBM" content="53.4285, 14.5528" />
   </head>
   <body>
+    <div class="site-reveal" aria-hidden="true">
+      <div class="site-reveal__garage">
+        <div class="site-reveal__door">
+          <p class="site-reveal__brand">
+            <span class="initials">E</span>xpert <span class="initials">D</span>oors
+          </p>
+        </div>
+      </div>
+    </div>
     <a class="home-fab" href="/expert-doors">← Strona główna</a>
+    <div class="ai-chatbot" data-chatbot>
+      <button class="ai-chatbot__toggle" type="button" aria-expanded="false" aria-controls="ai-chatbot-panel">
+        🤖 Wsparcie AI
+      </button>
+      <section class="ai-chatbot__panel" id="ai-chatbot-panel" hidden>
+        <header class="ai-chatbot__header">
+          <strong>Expert Doors Assistant</strong>
+          <span>Online</span>
+        </header>
+        <div class="ai-chatbot__messages" data-chatbot-messages>
+          <p class="bot">Cześć! Jestem asystentem Expert Doors. Zapytaj o montaż, serwis, cennik lub termin pomiaru.</p>
+        </div>
+        <form class="ai-chatbot__form" data-chatbot-form>
+          <input name="message" type="text" maxlength="260" placeholder="Napisz wiadomość..." required />
+          <button type="submit">Wyślij</button>
+        </form>
+      </section>
+    </div>
     <slot />
+    <script>
+      const reveal = document.querySelector('.site-reveal');
+      window.addEventListener('load', () => {
+        reveal?.classList.add('is-open');
+        setTimeout(() => reveal?.classList.add('is-hidden'), 1700);
+      });
+
+      const chatbot = document.querySelector('[data-chatbot]');
+      const toggle = chatbot?.querySelector('.ai-chatbot__toggle');
+      const panel = chatbot?.querySelector('.ai-chatbot__panel');
+      const form = chatbot?.querySelector('[data-chatbot-form]');
+      const messages = chatbot?.querySelector('[data-chatbot-messages]');
+
+      const botReply = (text) => {
+        const query = text.toLowerCase();
+        if (query.includes('cena') || query.includes('koszt') || query.includes('wycena')) {
+          return 'Ceny zależą od wymiaru i modelu. Wejdź na „Oferta cenowa” lub wyślij formularz — przygotujemy wycenę.';
+        }
+        if (query.includes('termin') || query.includes('pomiar') || query.includes('kiedy')) {
+          return 'Pomiar i montaż realizujemy po wcześniejszym umówieniu. Napisz lokalizację i preferowany termin w formularzu.';
+        }
+        if (query.includes('serwis') || query.includes('napraw')) {
+          return 'Pomagamy w serwisie i regulacji drzwi oraz bram. Wybierz usługę „Serwis i regulacje” i wyślij zgłoszenie.';
+        }
+        if (query.includes('drzwi') || query.includes('bram') || query.includes('montaż')) {
+          return 'Obsługujemy drzwi wejściowe, wewnętrzne, segmentowe i automatykę bram. Mogę pokierować Cię do odpowiedniej usługi.';
+        }
+        return 'Dziękuję za wiadomość. Jeśli chcesz, mogę pomóc dobrać usługę albo przekierować Cię do formularza kontaktowego.';
+      };
+
+      const addMessage = (text, role) => {
+        if (!messages) return;
+        const node = document.createElement('p');
+        node.className = role;
+        node.textContent = text;
+        messages.appendChild(node);
+        messages.scrollTop = messages.scrollHeight;
+      };
+
+      toggle?.addEventListener('click', () => {
+        const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', String(!isOpen));
+        if (panel) panel.hidden = isOpen;
+      });
+
+      form?.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const data = new FormData(form);
+        const value = String(data.get('message') || '').trim();
+        if (!value) return;
+
+        addMessage(value, 'user');
+        form.reset();
+
+        window.setTimeout(() => {
+          addMessage(botReply(value), 'bot');
+        }, 360);
+      });
+    </script>
   </body>
 </html>

@@ -263,9 +263,9 @@ footer {
   box-shadow: 0 0 20px rgba(245, 158, 11, .2);
 }
 
-.orbit-label--back { z-index: 1; animation: orbit-pass-behind 5.2s linear infinite; }
+.orbit-label--back { z-index: 1; animation: orbit-pass-behind 6s linear infinite; }
 
-.orbit-label--front { z-index: 5; animation: orbit-pass-front 5.2s linear infinite; }
+.orbit-label--front { z-index: 5; animation: orbit-pass-front 6s linear infinite; animation-delay: -3s; }
 
 .logo-initial {
   color: #ef4444;
@@ -384,19 +384,19 @@ footer {
 .wheel.right { right: 10px; }
 
 @keyframes orbit-pass-behind {
-  0% { transform: translate(-50%, -50%) translate(-56px, -2px) scale(.88); opacity: .75; }
-  25% { transform: translate(-50%, -50%) translate(0, -14px) scale(.82); opacity: .58; }
-  50% { transform: translate(-50%, -50%) translate(56px, -2px) scale(.88); opacity: .75; }
-  75% { transform: translate(-50%, -50%) translate(0, 6px) scale(1); opacity: .95; }
-  100% { transform: translate(-50%, -50%) translate(-56px, -2px) scale(.88); opacity: .75; }
+  0% { transform: translate(-50%, -50%) translate(-56px, -2px) scale(.88); opacity: .7; }
+  25% { transform: translate(-50%, -50%) translate(0, -14px) scale(.82); opacity: .56; }
+  50% { transform: translate(-50%, -50%) translate(56px, -2px) scale(.88); opacity: .7; }
+  75% { transform: translate(-50%, -50%) translate(0, 14px) scale(1.02); opacity: .96; }
+  100% { transform: translate(-50%, -50%) translate(-56px, -2px) scale(.88); opacity: .7; }
 }
 
 @keyframes orbit-pass-front {
-  0% { transform: translate(-50%, -50%) translate(56px, 2px) scale(.88); opacity: .75; }
-  25% { transform: translate(-50%, -50%) translate(0, 16px) scale(1.02); opacity: 1; }
-  50% { transform: translate(-50%, -50%) translate(-56px, 2px) scale(.88); opacity: .75; }
-  75% { transform: translate(-50%, -50%) translate(0, -12px) scale(.82); opacity: .58; }
-  100% { transform: translate(-50%, -50%) translate(56px, 2px) scale(.88); opacity: .75; }
+  0% { transform: translate(-50%, -50%) translate(-56px, -2px) scale(.88); opacity: .7; }
+  25% { transform: translate(-50%, -50%) translate(0, -14px) scale(.82); opacity: .56; }
+  50% { transform: translate(-50%, -50%) translate(56px, -2px) scale(.88); opacity: .7; }
+  75% { transform: translate(-50%, -50%) translate(0, 14px) scale(1.02); opacity: .96; }
+  100% { transform: translate(-50%, -50%) translate(-56px, -2px) scale(.88); opacity: .7; }
 }
 
 @keyframes garage-open {
@@ -445,165 +445,83 @@ footer {
 .service-door-link {
   margin-top: .75rem;
   display: inline-flex;
-  flex-direction: column;
-  gap: .55rem;
-  align-items: center;
   text-decoration: none;
 }
 
 .door-visual {
   position: relative;
-  width: 132px;
-  height: 90px;
-  border-radius: 12px;
-  border: 1px solid rgba(245, 158, 11, .5);
-  background: linear-gradient(160deg, #1f2937, #0b1222);
-  overflow: hidden;
-}
-
-.service-link-label {
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  padding: .42rem .95rem;
-  color: var(--text);
-}
-
-.service-door-link:hover .service-link-label,
-.service-door-link.is-opening .service-link-label {
-  border-color: var(--primary);
-  color: var(--primary);
+  width: 140px;
+  height: 190px;
+  border-radius: 10px;
+  border: 2px solid rgba(245, 158, 11, .55);
+  background: linear-gradient(165deg, #1f2937, #0b1222);
+  overflow: visible;
+  transform-origin: left center;
+  transition: transform .65s ease;
 }
 
 .door-panel {
   position: absolute;
-  inset: 8px 14px;
+  inset: 9px;
   border-radius: 8px;
-  background: linear-gradient(180deg, #e2e8f0, #94a3b8);
-  transform-origin: left center;
-  transition: transform .8s ease;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,0) 20%),
+    repeating-linear-gradient(
+      to bottom,
+      #d7dee8 0,
+      #d7dee8 24px,
+      #a7b2c2 24px,
+      #a7b2c2 26px
+    );
+  box-shadow: inset 0 0 0 1px rgba(15, 23, 42, .2);
 }
 
 .door-handle {
   position: absolute;
-  right: 22px;
-  top: 42px;
-  width: 8px;
-  height: 8px;
+  right: 16px;
+  top: 92px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: #f59e0b;
+  z-index: 3;
 }
 
-.service-door-link:hover .service-door--entry .door-panel,
-.service-door-link.is-opening .service-door--entry .door-panel,
-.service-door-link:hover .service-door--inside .door-panel,
-.service-door-link.is-opening .service-door--inside .door-panel {
-  transform: perspective(260px) rotateY(-58deg);
-}
-
-.service-door--segment {
-  display: grid;
-  align-content: end;
-  gap: 4px;
-  padding: 8px;
-}
-
-.segment-slat {
-  display: block;
-  height: 16px;
-  border-radius: 4px;
-  background: linear-gradient(180deg, #e2e8f0, #94a3b8);
-  transform: translateY(0);
-  transition: transform .8s ease;
-}
-
-.service-door-link:hover .segment-slat,
-.service-door-link.is-opening .segment-slat {
-  transform: translateY(-18px);
-}
-
-.service-door-link:hover .segment-slat:nth-child(2),
-.service-door-link.is-opening .segment-slat:nth-child(2) { transition-delay: .06s; }
-.service-door-link:hover .segment-slat:nth-child(3),
-.service-door-link.is-opening .segment-slat:nth-child(3) { transition-delay: .12s; }
-.service-door-link:hover .segment-slat:nth-child(4),
-.service-door-link.is-opening .segment-slat:nth-child(4) { transition-delay: .18s; }
-
-.gear {
+.door-sign {
   position: absolute;
-  border-radius: 50%;
-  border: 4px dashed #f59e0b;
-  animation: gears-spin 2.8s linear infinite;
-}
-
-.gear-lg { width: 34px; height: 34px; left: 18px; top: 28px; }
-.gear-sm { width: 24px; height: 24px; left: 48px; top: 44px; animation-direction: reverse; }
-
-.garage-gate {
-  position: absolute;
-  right: 10px;
-  bottom: 10px;
-  width: 54px;
-  height: 66px;
+  right: -22px;
+  top: 102px;
+  padding: .34rem .5rem;
   border-radius: 8px;
-  background: repeating-linear-gradient(to bottom, #cbd5e1 0, #cbd5e1 10px, #64748b 10px, #64748b 12px);
-  transition: transform .9s ease;
+  border: 1px solid rgba(148, 163, 184, .5);
+  background: rgba(248, 250, 252, .95);
+  color: #111827;
+  font-size: .68rem;
+  font-weight: 700;
+  line-height: 1.1;
+  box-shadow: 0 8px 20px rgba(2, 6, 23, .35);
+  transform-origin: top left;
+  transition: transform .4s ease;
 }
 
-.service-door-link:hover .garage-gate,
-.service-door-link.is-opening .garage-gate { transform: translateY(-56px); }
-
-.technician {
-  position: absolute;
-  left: 20px;
-  bottom: 10px;
-  width: 20px;
-  height: 38px;
-  background: linear-gradient(180deg, #60a5fa 0 52%, #1e3a8a 52%);
-  border-radius: 9px;
-}
-
-.technician::before {
+.door-sign::before {
   content: '';
   position: absolute;
-  left: 3px;
-  top: -14px;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: #f8cfa9;
-}
-
-.wrench, .measure-tape {
-  position: absolute;
-  width: 18px;
-  height: 4px;
+  left: -7px;
+  top: -10px;
+  width: 2px;
+  height: 12px;
   background: #f59e0b;
-  border-radius: 999px;
-  left: 40px;
-  bottom: 34px;
-  transform-origin: left center;
-  transition: transform .6s ease;
+  transform: rotate(-18deg);
 }
 
-.measure-tape { background: #22d3ee; width: 22px; }
-
-.frame {
-  position: absolute;
-  right: 12px;
-  bottom: 10px;
-  width: 48px;
-  height: 68px;
-  border: 3px solid #cbd5e1;
-  border-bottom: 6px solid #94a3b8;
+.service-door-link:hover .door-visual {
+  transform: perspective(520px) rotateY(-25deg) translateX(2px);
 }
 
-.service-door-link:hover .wrench,
-.service-door-link.is-opening .wrench,
-.service-door-link:hover .measure-tape,
-.service-door-link.is-opening .measure-tape { transform: rotate(25deg); }
-
-.service-door-link:hover .technician,
-.service-door-link.is-opening .technician { animation: technician-work .8s ease-in-out infinite alternate; }
+.service-door-link:hover .door-sign {
+  transform: rotate(-9deg);
+}
 
 .realization-card {
   margin: 0;
@@ -623,28 +541,28 @@ footer {
   color: #fcd34d;
 }
 
-@keyframes gears-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-@keyframes technician-work {
-  from { transform: translateY(0); }
-  to { transform: translateY(-2px); }
-}
-
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; }
+  .hero { padding-top: 5.1rem; }
   .orbit-logo {
     position: fixed;
     left: .55rem;
     top: .45rem;
     justify-self: start;
     margin-top: 0;
-    z-index: 25;
-    width: 76px;
+    z-index: 40;
+    width: 82px;
   }
   .home-fab { bottom: .65rem; left: .65rem; }
+}
+
+@media (max-width: 1024px) {
+  .orbit-logo {
+    position: fixed;
+    left: .55rem;
+    top: .45rem;
+    z-index: 40;
+  }
 }
 
 .ai-chatbot {

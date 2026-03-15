@@ -47,6 +47,7 @@ body {
   place-items: center;
   background: radial-gradient(circle at center, rgba(30, 41, 59, .98), rgba(2, 6, 23, 1));
   transition: opacity .35s ease;
+  animation: reveal-fade 2.2s ease forwards;
 }
 
 .site-reveal.is-hidden {
@@ -79,6 +80,7 @@ body {
   transition: transform 1.25s cubic-bezier(.4, 0, .2, 1);
   display: grid;
   place-items: center;
+  animation: reveal-door-open 1.35s .35s cubic-bezier(.4, 0, .2, 1) forwards;
 }
 
 .site-reveal__brand {
@@ -100,6 +102,16 @@ body {
 
 .site-reveal.is-open .site-reveal__door {
   transform: translateY(-105%);
+}
+
+@keyframes reveal-door-open {
+  from { transform: translateY(0); }
+  to { transform: translateY(-105%); }
+}
+
+@keyframes reveal-fade {
+  0%, 78% { opacity: 1; }
+  100% { opacity: 0; pointer-events: none; }
 }
 
 header {
@@ -252,7 +264,7 @@ footer {
   top: 50%;
   left: 50%;
   color: #e5e7eb;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: .6px;
   white-space: nowrap;
   font-size: .46rem;
@@ -445,19 +457,23 @@ footer {
 .service-door-link {
   margin-top: .75rem;
   display: inline-flex;
+  width: 100%;
+  justify-content: center;
   text-decoration: none;
 }
 
 .door-visual {
   position: relative;
-  width: 140px;
-  height: 190px;
+  width: 142px;
+  height: 196px;
   border-radius: 10px;
   border: 2px solid rgba(245, 158, 11, .55);
   background: linear-gradient(165deg, #1f2937, #0b1222);
   overflow: visible;
   transform-origin: left center;
   transition: transform .65s ease;
+  box-shadow: 0 14px 34px rgba(2, 6, 23, .42);
+  cursor: pointer;
 }
 
 .door-panel {
@@ -496,8 +512,8 @@ footer {
   border: 1px solid rgba(148, 163, 184, .5);
   background: rgba(248, 250, 252, .95);
   color: #111827;
-  font-size: .68rem;
-  font-weight: 700;
+  font-size: .72rem;
+  font-weight: 800;
   line-height: 1.1;
   box-shadow: 0 8px 20px rgba(2, 6, 23, .35);
   transform-origin: top left;
@@ -517,6 +533,10 @@ footer {
 
 .service-door-link:hover .door-visual {
   transform: perspective(520px) rotateY(-25deg) translateX(2px);
+}
+
+.service-door-link:active .door-visual {
+  transform: perspective(520px) rotateY(-12deg) translateX(1px);
 }
 
 .service-door-link:hover .door-sign {
@@ -582,7 +602,7 @@ footer {
   color: #111827;
   border-radius: 999px;
   padding: .58rem 1rem;
-  font-weight: 700;
+  font-weight: 800;
   cursor: pointer;
   box-shadow: 0 12px 30px rgba(245, 158, 11, .35);
 }
@@ -659,7 +679,7 @@ footer {
   background: rgba(245, 158, 11, .9);
   color: #111827;
   padding: .6rem .75rem;
-  font-weight: 700;
+  font-weight: 800;
   cursor: pointer;
 }
 

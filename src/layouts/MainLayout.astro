@@ -12,6 +12,8 @@ const {
   description = 'Expert Doors — montaż drzwi i bram garażowych w Szczecinie i województwie zachodniopomorskim.',
   keywords = 'montaż drzwi Szczecin, bramy garażowe Szczecin, Expert Doors Szczecin, serwis bram Szczecin, drzwi wejściowe Szczecin, zachodniopomorskie',
 } = Astro.props;
+
+const isHomePath = Astro.url.pathname === '/expert-doors' || Astro.url.pathname === '/expert-doors/';
 ---
 
 <!doctype html>
@@ -29,15 +31,17 @@ const {
     <meta name="ICBM" content="53.4285, 14.5528" />
   </head>
   <body>
-    <div class="site-reveal" aria-hidden="true">
-      <div class="site-reveal__garage">
-        <div class="site-reveal__door">
-          <p class="site-reveal__brand">
-            <span class="initials">E</span>xpert <span class="initials">D</span>oors.Pl
-          </p>
+    {isHomePath && (
+      <div class="site-reveal" aria-hidden="true">
+        <div class="site-reveal__garage">
+          <div class="site-reveal__door">
+            <p class="site-reveal__brand">
+              <span class="initials">E</span>xpert <span class="initials">D</span>oors.Pl
+            </p>
+          </div>
         </div>
       </div>
-    </div>
+    )}
     <a class="home-fab" href="/expert-doors">← Strona główna</a>
     <div class="ai-chatbot" data-chatbot>
       <button class="ai-chatbot__toggle" type="button" aria-expanded="false" aria-controls="ai-chatbot-panel">
@@ -57,12 +61,17 @@ const {
         </form>
       </section>
     </div>
+    <div class="cookie-banner" id="cookie-banner" hidden>
+      <p>Ta strona korzysta z plików cookie, aby poprawić jakość działania.</p>
+      <button type="button" id="cookie-accept">Zezwalaj na pliki cookie</button>
+    </div>
     <slot />
     <script>
       const reveal = document.querySelector('.site-reveal');
       window.addEventListener('load', () => {
-        reveal?.classList.add('is-open');
-        setTimeout(() => reveal?.classList.add('is-hidden'), 2100);
+        if (!reveal) return;
+        reveal.classList.add('is-open');
+        setTimeout(() => reveal.classList.add('is-hidden'), 2100);
       });
 
       const chatbot = document.querySelector('[data-chatbot]');
@@ -116,6 +125,20 @@ const {
           addMessage(botReply(value), 'bot');
         }, 360);
       });
+
+      const cookieBanner = document.querySelector('#cookie-banner');
+      const cookieAccept = document.querySelector('#cookie-accept');
+      const cookieKey = 'expertDoorsCookiesAccepted';
+
+      if (cookieBanner && !localStorage.getItem(cookieKey)) {
+        cookieBanner.hidden = false;
+      }
+
+      cookieAccept?.addEventListener('click', () => {
+        localStorage.setItem(cookieKey, '1');
+        if (cookieBanner) cookieBanner.hidden = true;
+      });
+
     </script>
   </body>
 </html>

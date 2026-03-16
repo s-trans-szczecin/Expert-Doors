@@ -215,20 +215,39 @@ const googleScriptUrl =
 
     const formData = new FormData(orderForm);
     formData.set('Data_zgloszenia', new Date().toISOString());
+
+    // Zgodność wsteczna: część starszych skryptów GAS czyta stare nazwy pól.
+    formData.set('name', String(formData.get('Zleceniodawca') ?? ''));
+    formData.set('phone', String(formData.get('Telefon') ?? ''));
+    formData.set('location', String(formData.get('Adres') ?? ''));
+    formData.set('service', String(formData.get('Typ_montazu') ?? ''));
+    formData.set('message', String(formData.get('Opis') ?? ''));
+
     const payload = new URLSearchParams();
     for (const [key, value] of formData.entries()) {
       payload.append(key, String(value));
     }
 
     try {
-      await fetch(orderForm.action, {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 12000);
+      const response = await fetch(orderForm.action, {
         method: 'POST',
-        mode: 'no-cors',
+        mode: 'cors',
+        headers: {
+          Accept: 'application/json, text/plain, */*',
+        },
         body: payload,
+        signal: controller.signal,
       });
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
 
       if (orderStatus) {
-        orderStatus.textContent = 'Dziękujemy! Zgłoszenie zostało wysłane. Jeśli nie otrzymasz odpowiedzi, zadzwoń do nas.';
+        orderStatus.textContent = 'Dziękujemy! Zgłoszenie zostało wysłane i potwierdzone przez serwer.';
         orderStatus.className = 'form-status success';
       }
 
@@ -239,7 +258,7 @@ const googleScriptUrl =
       }
     } catch (error) {
       if (orderStatus) {
-        orderStatus.textContent = 'Nie udało się wysłać formularza. Spróbuj ponownie za chwilę.';
+        orderStatus.textContent = 'Nie udało się potwierdzić wysyłki formularza. Sprawdź połączenie lub zadzwoń do nas: +48 533 801 953.';
         orderStatus.className = 'form-status error';
       }
       console.error('Błąd wysyłki formularza:', error);

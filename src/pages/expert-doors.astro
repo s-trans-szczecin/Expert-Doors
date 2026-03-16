@@ -110,27 +110,11 @@ const googleScriptUrl =
       <div class="gallery">
         <figure class="realization-card">
           <img src="/images/expert-doors/realizacje/realizacja-01.jpg" alt="Drzwi wejściowe – realizacja 01" loading="lazy" onerror="this.onerror=null;this.src='/images/expert-doors/gallery-1.svg';"/>
-          <figcaption>Drzwi wejściowe — realizacja 01 (podmień plik: <code>public/images/expert-doors/realizacje/realizacja-01.jpg</code>)</figcaption>
+          <figcaption>Drzwi wejściowe — realizacja 01</figcaption>
         </figure>
         <figure class="realization-card">
           <img src="/images/expert-doors/realizacje/realizacja-02.jpg" alt="Brama segmentowa – realizacja 02" loading="lazy" onerror="this.onerror=null;this.src='/images/expert-doors/gallery-2.svg';"/>
-          <figcaption>Brama segmentowa — realizacja 02 (podmień plik: <code>realizacja-02.jpg</code>)</figcaption>
-        </figure>
-        <figure class="realization-card">
-          <img src="/images/expert-doors/realizacje/realizacja-03.jpg" alt="Drzwi wewnętrzne – realizacja 03" loading="lazy" onerror="this.onerror=null;this.src='/images/expert-doors/gallery-3.svg';"/>
-          <figcaption>Drzwi wewnętrzne — realizacja 03 (podmień plik: <code>realizacja-03.jpg</code>)</figcaption>
-        </figure>
-        <figure class="realization-card">
-          <img src="/images/expert-doors/realizacje/realizacja-04.jpg" alt="Automatyka bram – realizacja 04" loading="lazy" onerror="this.onerror=null;this.src='/images/expert-doors/gallery-4.svg';"/>
-          <figcaption>Automatyka bram — realizacja 04 (podmień plik: <code>realizacja-04.jpg</code>)</figcaption>
-        </figure>
-        <figure class="realization-card">
-          <img src="/images/expert-doors/realizacje/realizacja-05.jpg" alt="Serwis i regulacje – realizacja 05" loading="lazy" onerror="this.onerror=null;this.src='/images/expert-doors/gallery-5.svg';"/>
-          <figcaption>Serwis i regulacje — realizacja 05 (podmień plik: <code>realizacja-05.jpg</code>)</figcaption>
-        </figure>
-        <figure class="realization-card">
-          <img src="/images/expert-doors/realizacje/realizacja-06.jpg" alt="Montaż i pomiar – realizacja 06" loading="lazy" onerror="this.onerror=null;this.src='/images/expert-doors/gallery-6.svg';"/>
-          <figcaption>Montaż i pomiar — realizacja 06 (podmień plik: <code>realizacja-06.jpg</code>)</figcaption>
+          <figcaption>Brama segmentowa — realizacja 02</figcaption>
         </figure>
       </div>
     </section>
@@ -138,7 +122,7 @@ const googleScriptUrl =
     <section id="formularz">
       <div class="panel">
         <h2 class="section-title">Formularz zlecenia</h2>
-        <p>Formularz wysyła dane do Google Apps Script / AppSheet (kolumny dopasowane do arkusza).</p>
+        <p>Prosimy o wypełnienie poniższych danych, aby zgłosić zlecenie.</p>
         <form method="POST" action={googleScriptUrl} id="order-form">
           <label>Imię i nazwisko <input name="Zleceniodawca" type="text" required /></label>
           <label>Telefon <input name="Telefon" type="tel" required /></label>
@@ -162,15 +146,17 @@ const googleScriptUrl =
             Opis zlecenia
             <textarea name="Opis" placeholder="Napisz czego potrzebujesz" required></textarea>
           </label>
+
           <input type="hidden" name="ID" value="" />
-          <input type="hidden" name="Numer_zlecenia" value="" />
+          <input type="hidden" name="Numer zlecenia" value="" /> 
           <input type="hidden" name="Klient" value="" />
           <input type="hidden" name="Termin" value="" />
           <input type="hidden" name="Status" value="Nowe" />
-          <input type="hidden" name="Zdjecie_przed" value="" />
+          <input type="hidden" name="Zdjecie przed" value="" />
           <input type="hidden" name="Zdjecie_po" value="" />
-          <input type="hidden" name="Podpis_klienta" value="" />
+          <input type="hidden" name="Podpis klienta" value="" />
           <input type="hidden" name="Uwagi" value="" />
+
           <button type="submit" class="btn primary">Wyślij zlecenie</button>
           <p id="order-form-status" class="form-status" aria-live="polite"></p>
         </form>
@@ -187,13 +173,11 @@ const googleScriptUrl =
         <a class="btn primary" href="tel:+48533801953">📞 Zadzwoń: +48 533 801 953</a>
         <a class="btn secondary" href="mailto:s.trans.szczecin@gmail.com">✉️ Napisz e-mail</a>
       </div>
-      <p class="note" style="margin-top:.65rem;">Aby zmienić adres e-mail w przyszłości, podmień `mailto:` w pliku `src/pages/expert-doors.astro`.</p>
     </div>
   </footer>
 </MainLayout>
 
 <script>
-
   const orderForm = document.querySelector('#order-form');
   const orderStatus = document.querySelector('#order-form-status');
 
@@ -214,14 +198,13 @@ const googleScriptUrl =
     }
 
     const formData = new FormData(orderForm);
-    formData.set('Data_zgloszenia', new Date().toISOString());
-
-    // Zgodność wsteczna: część starszych skryptów GAS czyta stare nazwy pól.
-    formData.set('name', String(formData.get('Zleceniodawca') ?? ''));
-    formData.set('phone', String(formData.get('Telefon') ?? ''));
-    formData.set('location', String(formData.get('Adres') ?? ''));
-    formData.set('service', String(formData.get('Typ_montazu') ?? ''));
-    formData.set('message', String(formData.get('Opis') ?? ''));
+    
+    // Ustawienie daty zgłoszenia zgodnie z nagłówkiem w arkuszu [cite: 1, 19]
+    // Jeśli w arkuszu masz "Data_zgłoszenia" (przez 'ó'), zmień klucz poniżej na Data_zgłoszenia
+    formData.set('Data_zgłoszenia', new Date().toLocaleString('pl-PL'));
+    
+    // Generowanie prostego ID na potrzeby AppSheet
+    formData.set('ID', 'WEB-' + Date.now());
 
     const payload = new URLSearchParams();
     for (const [key, value] of formData.entries()) {
@@ -229,25 +212,16 @@ const googleScriptUrl =
     }
 
     try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 12000);
-      const response = await fetch(orderForm.action, {
+      // Używamy mode: 'no-cors' dla Google Apps Script, jeśli nie masz skonfigurowanych nagłówków CORS
+      await fetch(orderForm.action, {
         method: 'POST',
-        mode: 'cors',
-        headers: {
-          Accept: 'application/json, text/plain, */*',
-        },
+        mode: 'no-cors', 
         body: payload,
-        signal: controller.signal,
       });
-      clearTimeout(timeoutId);
 
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
-
+      // Ponieważ 'no-cors' nie zwraca czytelnej odpowiedzi, zakładamy sukces jeśli nie rzuci błędu sieci
       if (orderStatus) {
-        orderStatus.textContent = 'Dziękujemy! Zgłoszenie zostało wysłane i potwierdzone przez serwer.';
+        orderStatus.textContent = 'Dziękujemy! Zgłoszenie zostało wysłane.';
         orderStatus.className = 'form-status success';
       }
 
@@ -258,10 +232,10 @@ const googleScriptUrl =
       }
     } catch (error) {
       if (orderStatus) {
-        orderStatus.textContent = 'Nie udało się potwierdzić wysyłki formularza. Sprawdź połączenie lub zadzwoń do nas: +48 533 801 953.';
+        orderStatus.textContent = 'Nie udało się wysłać formularza. Spróbuj ponownie lub zadzwoń.';
         orderStatus.className = 'form-status error';
       }
-      console.error('Błąd wysyłki formularza:', error);
+      console.error('Błąd:', error);
     } finally {
       if (submitButton instanceof HTMLButtonElement) {
         submitButton.disabled = false;

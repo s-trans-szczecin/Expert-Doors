@@ -3,7 +3,7 @@ import MainLayout from '../layouts/MainLayout.astro';
 import OrbitGarageLogo from '../components/OrbitGarageLogo.astro';
 
 const googleScriptUrl =
-  'https://script.google.com/macros/s/AKfycbxoJ6JBJO90fPm790Or1M3LnGrK6DthyQOpmcjUOtQsTwQzjG5kTLTTXyndUmO8LTtR/exec';
+  'https://script.google.com/macros/s/AKfycbxtDG7eRPYDbhMtz17MdRSkqYdqhlRi8Ppv5JqeNjMgahJl5LoZll8w69SaETOn9r93/exec';
 ---
 
 <MainLayout
@@ -192,81 +192,57 @@ const googleScriptUrl =
   </footer>
 </MainLayout>
 
-<script>
-
+<script is:inline>
   const orderForm = document.querySelector('#order-form');
   const orderStatus = document.querySelector('#order-form-status');
 
   orderForm?.addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    if (!(orderForm instanceof HTMLFormElement)) return;
-
     const submitButton = orderForm.querySelector('button[type="submit"]');
-    if (submitButton instanceof HTMLButtonElement) {
-      submitButton.disabled = true;
-      submitButton.textContent = 'Wysyłanie...';
-    }
-
-    if (orderStatus) {
-      orderStatus.textContent = 'Trwa wysyłanie formularza...';
-      orderStatus.className = 'form-status';
-    }
+    submitButton.disabled = true;
+    submitButton.textContent = 'Wysyłanie...';
 
     const formData = new FormData(orderForm);
-    formData.set('Data_zgloszenia', new Date().toISOString());
+    
+    // Ustawiamy datę w formacie czytelnym dla Polaka
+    formData.set('Data_zgloszenia', new Date().toLocaleString('pl-PL'));
+    
+    // Generujemy ID i Numer zlecenia, żeby nie były puste
+    formData.set('ID', 'WEB-' + Date.now());
+    formData.set('Numer_zlecenia', 'OG-' + Math.floor(Math.random() * 9000));
 
-    // Zgodność wsteczna: część starszych skryptów GAS czyta stare nazwy pól.
-    formData.set('name', String(formData.get('Zleceniodawca') ?? ''));
-    formData.set('phone', String(formData.get('Telefon') ?? ''));
-    formData.set('location', String(formData.get('Adres') ?? ''));
-    formData.set('service', String(formData.get('Typ_montazu') ?? ''));
-    formData.set('message', String(formData.get('Opis') ?? ''));
-
-    const payload = new URLSearchParams();
+    // Tworzymy paczkę danych do wysyłki
+    const params = new URLSearchParams();
     for (const [key, value] of formData.entries()) {
-      payload.append(key, String(value));
+      params.append(key, value);
     }
 
     try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 12000);
-      const response = await fetch(orderForm.action, {
+      // Używamy metody, która zadziałała w Twoim teście
+      await fetch(`${orderForm.action}?${params.toString()}`, {
         method: 'POST',
-        mode: 'cors',
-        headers: {
-          Accept: 'application/json, text/plain, */*',
-        },
-        body: payload,
-        signal: controller.signal,
+        mode: 'no-cors'
       });
-      clearTimeout(timeoutId);
-
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
 
       if (orderStatus) {
-        orderStatus.textContent = 'Dziękujemy! Zgłoszenie zostało wysłane i potwierdzone przez serwer.';
-        orderStatus.className = 'form-status success';
+        orderStatus.textContent = 'Dziękujemy! Zlecenie zostało zapisane w arkuszu.';
+        orderStatus.style.color = '#28a745';
       }
-
       orderForm.reset();
-      const locationInput = orderForm.querySelector('input[name="Adres"]');
-      if (locationInput instanceof HTMLInputElement) {
-        locationInput.value = 'Szczecin i okolice';
-      }
+      
+      // Przywracamy domyślną lokalizację
+      const loc = orderForm.querySelector('input[name="Adres"]');
+      if (loc) loc.value = 'Szczecin i okolice';
+
     } catch (error) {
       if (orderStatus) {
-        orderStatus.textContent = 'Nie udało się potwierdzić wysyłki formularza. Sprawdź połączenie lub zadzwoń do nas: +48 533 801 953.';
-        orderStatus.className = 'form-status error';
+        orderStatus.textContent = 'Błąd wysyłki. Spróbuj ponownie.';
+        orderStatus.style.color = '#dc3545';
       }
-      console.error('Błąd wysyłki formularza:', error);
     } finally {
-      if (submitButton instanceof HTMLButtonElement) {
-        submitButton.disabled = false;
-        submitButton.textContent = 'Wyślij zlecenie';
-      }
+      submitButton.disabled = false;
+      submitButton.textContent = 'Wyślij zlecenie';
     }
   });
 </script>

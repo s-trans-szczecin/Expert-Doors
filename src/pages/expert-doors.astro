@@ -3,7 +3,7 @@ import MainLayout from '../layouts/MainLayout.astro';
 import OrbitGarageLogo from '../components/OrbitGarageLogo.astro';
 
 const googleScriptUrl =
-  'https://script.google.com/macros/s/AKfycbxoJ6JBJO90fPm790Or1M3LnGrK6DthyQOpmcjUOtQsTwQzjG5kTLTTXyndUmO8LTtR/exec'';
+  'https://script.google.com/macros/s/AKfycbxoJ6JBJO90fPm790Or1M3LnGrK6DthyQOpmcjUOtQsTwQzjG5kTLTTXyndUmO8LTtR/exec';
 ---
 
 <MainLayout
@@ -191,31 +191,82 @@ const googleScriptUrl =
     </div>
   </footer>
 </MainLayout>
-<script is:inline>
-  const orderForm = document.querySelector('#order-form'); // Upewnij się, że id się zgadza
 
-  orderForm?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    // Tworzymy parametry tak jak w działającym teście
-    const formData = new URLSearchParams(new FormData(orderForm));
+<script>
+
+  const orderForm = document.querySelector('#order-form');
+  const orderStatus = document.querySelector('#order-form-status');
+
+  orderForm?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    if (!(orderForm instanceof HTMLFormElement)) return;
+
+    const submitButton = orderForm.querySelector('button[type="submit"]');
+    if (submitButton instanceof HTMLButtonElement) {
+      submitButton.disabled = true;
+      submitButton.textContent = 'Wysyłanie...';
+    }
+
+    if (orderStatus) {
+      orderStatus.textContent = 'Trwa wysyłanie formularza...';
+      orderStatus.className = 'form-status';
+    }
+
+    const formData = new FormData(orderForm);
+    formData.set('Data_zgloszenia', new Date().toISOString());
+
+    // Zgodność wsteczna: część starszych skryptów GAS czyta stare nazwy pól.
+    formData.set('name', String(formData.get('Zleceniodawca') ?? ''));
+    formData.set('phone', String(formData.get('Telefon') ?? ''));
+    formData.set('location', String(formData.get('Adres') ?? ''));
+    formData.set('service', String(formData.get('Typ_montazu') ?? ''));
+    formData.set('message', String(formData.get('Opis') ?? ''));
+
+    const payload = new URLSearchParams();
+    for (const [key, value] of formData.entries()) {
+      payload.append(key, String(value));
+    }
 
     try {
-      // Wysyłka metodą, która w końcu zadziałała
-      await fetch(`${orderForm.action}?${formData.toString()}`, {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 12000);
+      const response = await fetch(orderForm.action, {
         method: 'POST',
-        mode: 'no-cors'
+        mode: 'cors',
+        headers: {
+          Accept: 'application/json, text/plain, */*',
+        },
+        body: payload,
+        signal: controller.signal,
       });
+      clearTimeout(timeoutId);
 
-      alert('Dziękujemy! Zlecenie zostało wysłane.');
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
+      if (orderStatus) {
+        orderStatus.textContent = 'Dziękujemy! Zgłoszenie zostało wysłane i potwierdzone przez serwer.';
+        orderStatus.className = 'form-status success';
+      }
+
       orderForm.reset();
-      
-      // Jeśli masz pole Adres, przywróć domyślną wartość
-      const addr = orderForm.querySelector('input[name="Adres"]');
-      if (addr) addr.value = 'Szczecin i okolice';
-
-    } catch (err) {
-      alert('Wystąpił błąd przy wysyłaniu. Spróbuj ponownie lub zadzwoń.');
+      const locationInput = orderForm.querySelector('input[name="Adres"]');
+      if (locationInput instanceof HTMLInputElement) {
+        locationInput.value = 'Szczecin i okolice';
+      }
+    } catch (error) {
+      if (orderStatus) {
+        orderStatus.textContent = 'Nie udało się potwierdzić wysyłki formularza. Sprawdź połączenie lub zadzwoń do nas: +48 533 801 953.';
+        orderStatus.className = 'form-status error';
+      }
+      console.error('Błąd wysyłki formularza:', error);
+    } finally {
+      if (submitButton instanceof HTMLButtonElement) {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Wyślij zlecenie';
+      }
     }
   });
 </script>

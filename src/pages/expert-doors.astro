@@ -3,7 +3,7 @@ import MainLayout from '../layouts/MainLayout.astro';
 import OrbitGarageLogo from '../components/OrbitGarageLogo.astro';
 
 const googleScriptUrl =
-  'https://script.google.com/macros/s/AKfycbxtDG7eRPYDbhMtz17MdRSkqYdqhlRi8Ppv5JqeNjMgahJl5LoZll8w69SaETOn9r93/exec';
+  'https://script.google.com/macros/s/AKfycbzZhrztge3wS91EUBqUk8f3CvlU12ZnK1dgev9BCnHtNyWxc8iXwp3D8f60xjIJs0PE/exec';
 ---
 
 <MainLayout
@@ -135,47 +135,58 @@ const googleScriptUrl =
       </div>
     </section>
 
-    <section id="formularz">
-      <div class="panel">
-        <h2 class="section-title">Formularz zlecenia</h2>
-        <p>Formularz wysyła dane do Google Apps Script / AppSheet (kolumny dopasowane do arkusza).</p>
-        <form method="POST" action={googleScriptUrl} id="order-form">
-          <label>Imię i nazwisko <input name="Zleceniodawca" type="text" required /></label>
-          <label>Telefon <input name="Telefon" type="tel" required /></label>
-          <label>
-            Lokalizacja realizacji
-            <input name="Adres" type="text" value="Szczecin i okolice" required />
-          </label>
-          <label>
-            Zakres usługi
-            <select name="Typ_montazu" required>
-              <option value="">Wybierz usługę</option>
-              <option>Montaż drzwi wejściowych</option>
-              <option>Montaż drzwi segmentowych</option>
-              <option>Montaż drzwi wewnętrznych</option>
-              <option>Automatyka bram</option>
-              <option>Serwis i regulacje</option>
-              <option>Montaż i pomiar</option>
-            </select>
-          </label>
-          <label>
-            Opis zlecenia
-            <textarea name="Opis" placeholder="Napisz czego potrzebujesz" required></textarea>
-          </label>
-          <input type="hidden" name="ID" value="" />
-          <input type="hidden" name="Numer_zlecenia" value="" />
-          <input type="hidden" name="Klient" value="" />
-          <input type="hidden" name="Termin" value="" />
-          <input type="hidden" name="Status" value="Nowe" />
-          <input type="hidden" name="Zdjecie_przed" value="" />
-          <input type="hidden" name="Zdjecie_po" value="" />
-          <input type="hidden" name="Podpis_klienta" value="" />
-          <input type="hidden" name="Uwagi" value="" />
-          <button type="submit" class="btn primary">Wyślij zlecenie</button>
-          <p id="order-form-status" class="form-status" aria-live="polite"></p>
-        </form>
+ <section id="formularz">
+  <div class="panel">
+    <h2 class="section-title">Formularz zlecenia</h2>
+    <p>Wypełnij poniższe dane, aby otrzymać wycenę zlecenia.</p>
+    
+    <form method="POST" action={googleScriptUrl} id="order-form">
+      <label>Imię i nazwisko <input name="Zleceniodawca" type="text" required /></label>
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+        <label>Telefon <input name="Telefon" type="tel" required /></label>
+        <label>Adres e-mail <input name="Adres_mail" type="email" required /></label>
       </div>
-    </section>
+
+      <label>Lokalizacja realizacji <input name="Adres" type="text" value="Szczecin i okolice" required /></label>
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+        <label>Zakres usługi
+          <select name="Typ_montazu" required>
+            <option value="">Wybierz usługę</option>
+            <option>Montaż drzwi wejściowych</option>
+            <option>Montaż drzwi segmentowych</option>
+            <option>Montaż drzwi wewnętrznych</option>
+            <option>Automatyka bram</option>
+            <option>Serwis i regulacje</option>
+            <option>Montaż i pomiar</option>
+          </select>
+        </label>
+        <label>Proponowany termin <input name="Termin_proponowany" type="date" /></label>
+      </div>
+
+      <label>Opis zlecenia 
+        <textarea name="Opis_zlecenia" placeholder="Napisz czego potrzebujesz (ilość drzwi, wymiary bramy itp.)" required></textarea>
+      </label>
+
+      <label>Dodatkowe uwagi dla montera
+        <textarea name="Uwagi" placeholder="Np. kod do bramy, preferowane godziny kontaktu"></textarea>
+      </label>
+
+      <input type="hidden" name="ID" value="" />
+      <input type="hidden" name="Numer_zlecenia" value="" />
+      <input type="hidden" name="Status" value="Nowe" />
+      <input type="hidden" name="Klient" value="" />
+      <input type="hidden" name="Termin" value="" />
+      <input type="hidden" name="Zdjecie_przed" value="" />
+      <input type="hidden" name="Zdjecie_po" value="" />
+      <input type="hidden" name="Podpis_klienta" value="" />
+
+      <button type="submit" class="btn primary">Wyślij zlecenie</button>
+      <p id="order-form-status" class="form-status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
   </main>
 
   <footer>

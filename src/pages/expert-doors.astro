@@ -2,7 +2,7 @@
 import MainLayout from '../layouts/MainLayout.astro';
 import OrbitGarageLogo from '../components/OrbitGarageLogo.astro';
 
-// TWÓJ NOWY LINK WDROŻENIA:
+// TWOJA AKTUALNA APLIKACJA (NAJNOWSZY LINK):
 const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbzQKTpqmwOWdMxMh0QOFhpWLL4k7GE_CCaQ-JtdiLqxF6HBQXerW7s1EnOu9lZXnh5T/exec';
 ---
 
@@ -186,7 +186,7 @@ const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbzQKTpqmwOWdMxM
     const idUnikalne = 'WEB-' + Date.now();
     const nrZlecenia = 'OG-' + Math.floor(Math.random() * 9000 + 1000);
 
-    // Ustawianie wartości dla ukrytych pól (klucze z Twojego arkusza)
+    // Ustawianie wartości dla ukrytych pól (klucze identyczne jak w arkuszu)
     formData.set('ID', idUnikalne);
     formData.set('Numer_zlecenia', nrZlecenia);
     formData.set('Data_zgloszenia', dataStr);
@@ -194,34 +194,35 @@ const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbzQKTpqmwOWdMxM
     formData.set('Imie', imie);
     formData.set('Nazwisko', nazwisko);
 
-    // Konwersja na format URLSearchParams (najbezpieczniejszy dla Google Apps Script)
+    // Konwersja na format URLSearchParams
     const payload = new URLSearchParams();
     for (const [key, value] of formData.entries()) {
       payload.append(key, value);
     }
 
     try {
+      // Wysłanie danych
       await fetch(orderForm.action, {
         method: 'POST',
-        mode: 'no-cors', // Ważne dla uniknięcia błędów CORS w Google Script
+        mode: 'no-cors', 
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: payload.toString(),
       });
 
+      // Jeśli no-cors nie wyrzuci błędu, uznajemy za sukces
       if (orderStatus) {
-        orderStatus.textContent = 'Dziękujemy! Zlecenie zostało zapisane.';
+        orderStatus.textContent = 'Dziękujemy! Zlecenie zostało zapisane w arkuszu.';
         orderStatus.style.color = '#28a745';
       }
       orderForm.reset();
-      // Przywrócenie domyślnego adresu
       const addr = orderForm.querySelector('input[name="Adres"]');
       if (addr) addr.value = 'Szczecin i okolice';
       
     } catch (error) {
       if (orderStatus) {
-        orderStatus.textContent = 'Wystąpił błąd. Spróbuj ponownie lub zadzwoń.';
+        orderStatus.textContent = 'Wystąpił błąd. Spróbuj ponownie lub zadzwoń: +48 533 801 953';
         orderStatus.style.color = '#dc3545';
       }
       console.error('Błąd:', error);

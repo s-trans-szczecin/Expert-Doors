@@ -2,8 +2,8 @@
 import MainLayout from '../layouts/MainLayout.astro';
 import OrbitGarageLogo from '../components/OrbitGarageLogo.astro';
 
-const googleScriptUrl =
-  'https://script.google.com/macros/s/AKfycbw6MhZjEccZ3NfuNFBONuZcRl0MiJLVPVe4I7QfxmhPilPPYY99BjqWfgq6_gZ0yIO0/exec';
+// TWÓJ NOWY LINK WDROŻENIA:
+const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbxlIWGeeaWPew6-im-py8RelUj5wR2YeavN6N437YRszGeNCY-WzX8gPduPn6Jr08Jl/exec';
 ---
 
 <MainLayout
@@ -105,47 +105,14 @@ const googleScriptUrl =
       </div>
     </section>
 
-    <section id="realizacje">
-      <h2 class="section-title">Przykładowe realizacje i wykonania</h2>
-      <div class="gallery">
-        <figure class="realization-card">
-          <img src="/images/expert-doors/realizacje/realizacja-01.jpg" alt="Drzwi wejściowe – realizacja 01" loading="lazy" onerror="this.onerror=null;this.src='/images/expert-doors/gallery-1.svg';"/>
-          <figcaption>Drzwi wejściowe — realizacja 01 (podmień plik: <code>public/images/expert-doors/realizacje/realizacja-01.jpg</code>)</figcaption>
-        </figure>
-        <figure class="realization-card">
-          <img src="/images/expert-doors/realizacje/realizacja-02.jpg" alt="Brama segmentowa – realizacja 02" loading="lazy" onerror="this.onerror=null;this.src='/images/expert-doors/gallery-2.svg';"/>
-          <figcaption>Brama segmentowa — realizacja 02 (podmień plik: <code>realizacja-02.jpg</code>)</figcaption>
-        </figure>
-        <figure class="realization-card">
-          <img src="/images/expert-doors/realizacje/realizacja-03.jpg" alt="Drzwi wewnętrzne – realizacja 03" loading="lazy" onerror="this.onerror=null;this.src='/images/expert-doors/gallery-3.svg';"/>
-          <figcaption>Drzwi wewnętrzne — realizacja 03 (podmień plik: <code>realizacja-03.jpg</code>)</figcaption>
-        </figure>
-        <figure class="realization-card">
-          <img src="/images/expert-doors/realizacje/realizacja-04.jpg" alt="Automatyka bram – realizacja 04" loading="lazy" onerror="this.onerror=null;this.src='/images/expert-doors/gallery-4.svg';"/>
-          <figcaption>Automatyka bram — realizacja 04 (podmień plik: <code>realizacja-04.jpg</code>)</figcaption>
-        </figure>
-        <figure class="realization-card">
-          <img src="/images/expert-doors/realizacje/realizacja-05.jpg" alt="Serwis i regulacje – realizacja 05" loading="lazy" onerror="this.onerror=null;this.src='/images/expert-doors/gallery-5.svg';"/>
-          <figcaption>Serwis i regulacje — realizacja 05 (podmień plik: <code>realizacja-05.jpg</code>)</figcaption>
-        </figure>
-        <figure class="realization-card">
-          <img src="/images/expert-doors/realizacje/realizacja-06.jpg" alt="Montaż i pomiar – realizacja 06" loading="lazy" onerror="this.onerror=null;this.src='/images/expert-doors/gallery-6.svg';"/>
-          <figcaption>Montaż i pomiar — realizacja 06 (podmień plik: <code>realizacja-06.jpg</code>)</figcaption>
-        </figure>
-      </div>
-    </section>
-
     <section id="formularz">
       <div class="panel">
         <h2 class="section-title">Formularz zlecenia</h2>
-        <p>Formularz wysyła dane do Google Apps Script / AppSheet (kolumny dopasowane do arkusza).</p>
         <form method="POST" action={googleScriptUrl} id="order-form">
-          <label>Imię i nazwisko <input name="Zleceniodawca" type="text" required /></label>
+          <label>Imię i Nazwisko <input name="Pelne_Nazwisko" type="text" placeholder="Jan Kowalski" required /></label>
           <label>Telefon <input name="Telefon" type="tel" required /></label>
-          <label>
-            Lokalizacja realizacji
-            <input name="Adres" type="text" value="Szczecin i okolice" required />
-          </label>
+          <label>E-mail <input name="adres_mail" type="email" required /></label>
+          <label>Lokalizacja realizacji <input name="Adres" type="text" value="Szczecin i okolice" required /></label>
           <label>
             Zakres usługi
             <select name="Typ_montazu" required>
@@ -158,19 +125,23 @@ const googleScriptUrl =
               <option>Montaż i pomiar</option>
             </select>
           </label>
-          <label>
-            Opis zlecenia
-            <textarea name="Opis" placeholder="Napisz czego potrzebujesz" required></textarea>
-          </label>
-          <input type="hidden" name="ID" value="" />
-          <input type="hidden" name="Numer_zlecenia" value="" />
-          <input type="hidden" name="Klient" value="" />
-          <input type="hidden" name="Termin" value="" />
+          <label>Opis zlecenia <textarea name="Opis" placeholder="Napisz czego potrzebujesz" required></textarea></label>
+
+          <input type="hidden" name="ID" />
+          <input type="hidden" name="Numer_zlecenia" />
+          <input type="hidden" name="Data_zgloszenia" />
+          <input type="hidden" name="Zleceniodawca" />
+          <input type="hidden" name="Imie" />
+          <input type="hidden" name="Nazwisko" />
           <input type="hidden" name="Status" value="Nowe" />
-          <input type="hidden" name="Zdjecie_przed" value="" />
-          <input type="hidden" name="Zdjecie_po" value="" />
-          <input type="hidden" name="Podpis_klienta" value="" />
-          <input type="hidden" name="Uwagi" value="" />
+          <input type="hidden" name="Termin" value="Do ustalenia" />
+          <input type="hidden" name="Pomiar" value="Nie" />
+          <input type="hidden" name="Kosztorys" value="Oczekuje" />
+          <input type="hidden" name="Zdjecie_przed" />
+          <input type="hidden" name="Zdjecie_po" />
+          <input type="hidden" name="Podpis_klienta" />
+          <input type="hidden" name="Uwagi" />
+
           <button type="submit" class="btn primary">Wyślij zlecenie</button>
           <p id="order-form-status" class="form-status" aria-live="polite"></p>
         </form>
@@ -180,93 +151,83 @@ const googleScriptUrl =
 
   <footer>
     <div class="container">
-      Expert Doors · Szczecin i okolice · Montaż drzwi i bram garażowych
-      <div class="cta-row" style="margin-top:.8rem;">
-        <a class="btn secondary" href="/polityka-prywatnosci">Polityka prywatności</a>
-        <a class="btn secondary" href="/regulamin">Regulamin</a>
-        <a class="btn primary" href="tel:+48533801953">📞 Zadzwoń: +48 533 801 953</a>
-        <a class="btn secondary" href="mailto:s.trans.szczecin@gmail.com">✉️ Napisz e-mail</a>
-      </div>
-      <p class="note" style="margin-top:.65rem;">Aby zmienić adres e-mail w przyszłości, podmień `mailto:` w pliku `src/pages/expert-doors.astro`.</p>
+      Expert Doors · Szczecin i okolice · <a href="tel:+48533801953" style="color:white; text-decoration:none;">+48 533 801 953</a>
     </div>
   </footer>
 </MainLayout>
 
-<script>
-
+<script is:inline>
   const orderForm = document.querySelector('#order-form');
   const orderStatus = document.querySelector('#order-form-status');
 
   orderForm?.addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    if (!(orderForm instanceof HTMLFormElement)) return;
-
     const submitButton = orderForm.querySelector('button[type="submit"]');
-    if (submitButton instanceof HTMLButtonElement) {
-      submitButton.disabled = true;
-      submitButton.textContent = 'Wysyłanie...';
-    }
+    submitButton.disabled = true;
+    submitButton.textContent = 'Wysyłanie...';
 
     if (orderStatus) {
-      orderStatus.textContent = 'Trwa wysyłanie formularza...';
-      orderStatus.className = 'form-status';
+      orderStatus.textContent = 'Trwa wysyłanie...';
+      orderStatus.style.color = 'white';
     }
 
     const formData = new FormData(orderForm);
-    formData.set('Data_zgloszenia', new Date().toISOString());
+    
+    // Logika rozdzielania Imienia i Nazwiska
+    const pelne = formData.get('Pelne_Nazwisko') || '';
+    const parts = pelne.trim().split(' ');
+    const imie = parts[0] || '';
+    const nazwisko = parts.slice(1).join(' ') || '';
 
-    // Zgodność wsteczna: część starszych skryptów GAS czyta stare nazwy pól.
-    formData.set('name', String(formData.get('Zleceniodawca') ?? ''));
-    formData.set('phone', String(formData.get('Telefon') ?? ''));
-    formData.set('location', String(formData.get('Adres') ?? ''));
-    formData.set('service', String(formData.get('Typ_montazu') ?? ''));
-    formData.set('message', String(formData.get('Opis') ?? ''));
+    // Generowanie danych do tabeli
+    const teraz = new Date();
+    const dataStr = teraz.toLocaleDateString('pl-PL') + ' ' + teraz.toLocaleTimeString('pl-PL');
+    const idUnikalne = 'WEB-' + Date.now();
+    const nrZlecenia = 'OG-' + Math.floor(Math.random() * 9000 + 1000);
 
+    // Ustawianie wartości dla ukrytych pól (klucze z Twojego arkusza)
+    formData.set('ID', idUnikalne);
+    formData.set('Numer_zlecenia', nrZlecenia);
+    formData.set('Data_zgloszenia', dataStr);
+    formData.set('Zleceniodawca', pelne);
+    formData.set('Imie', imie);
+    formData.set('Nazwisko', nazwisko);
+
+    // Konwersja na format URLSearchParams (najbezpieczniejszy dla Google Apps Script)
     const payload = new URLSearchParams();
     for (const [key, value] of formData.entries()) {
-      payload.append(key, String(value));
+      payload.append(key, value);
     }
 
     try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 12000);
-      const response = await fetch(orderForm.action, {
+      await fetch(orderForm.action, {
         method: 'POST',
-        mode: 'cors',
+        mode: 'no-cors', // Ważne dla uniknięcia błędów CORS w Google Script
         headers: {
-          Accept: 'application/json, text/plain, */*',
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: payload,
-        signal: controller.signal,
+        body: payload.toString(),
       });
-      clearTimeout(timeoutId);
-
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
 
       if (orderStatus) {
-        orderStatus.textContent = 'Dziękujemy! Zgłoszenie zostało wysłane i potwierdzone przez serwer.';
-        orderStatus.className = 'form-status success';
+        orderStatus.textContent = 'Dziękujemy! Zlecenie zostało zapisane.';
+        orderStatus.style.color = '#28a745';
       }
-
       orderForm.reset();
-      const locationInput = orderForm.querySelector('input[name="Adres"]');
-      if (locationInput instanceof HTMLInputElement) {
-        locationInput.value = 'Szczecin i okolice';
-      }
+      // Przywrócenie domyślnego adresu
+      const addr = orderForm.querySelector('input[name="Adres"]');
+      if (addr) addr.value = 'Szczecin i okolice';
+      
     } catch (error) {
       if (orderStatus) {
-        orderStatus.textContent = 'Nie udało się potwierdzić wysyłki formularza. Sprawdź połączenie lub zadzwoń do nas: +48 533 801 953.';
-        orderStatus.className = 'form-status error';
+        orderStatus.textContent = 'Wystąpił błąd. Spróbuj ponownie lub zadzwoń.';
+        orderStatus.style.color = '#dc3545';
       }
-      console.error('Błąd wysyłki formularza:', error);
+      console.error('Błąd:', error);
     } finally {
-      if (submitButton instanceof HTMLButtonElement) {
-        submitButton.disabled = false;
-        submitButton.textContent = 'Wyślij zlecenie';
-      }
+      submitButton.disabled = false;
+      submitButton.textContent = 'Wyślij zlecenie';
     }
   });
 </script>

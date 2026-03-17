@@ -197,22 +197,36 @@ const googleScriptUrl =
   orderForm?.addEventListener('submit', async (event) => {
     event.preventDefault();
 
+    // 1. Zbieramy dane z formularza
     const formData = new FormData(orderForm);
     const scriptUrl = orderForm.action;
     
-    // Zamieniamy dane z formularza na parametry w linku (tak jak nasz udany test)
-    const params = new URLSearchParams(formData).toString();
+    // 2. Budujemy prosty obiekt z danymi, żeby nic nie zginęło
+    const data = {};
+    formData.forEach((value, key) => {
+      data[key] = value;
+    });
 
     try {
-      await fetch(`${scriptUrl}?${params}`, {
+      // 3. Wysyłamy metodą POST (najbezpieczniejsza)
+      await fetch(scriptUrl, {
         method: 'POST',
-        mode: 'no-cors'
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams(data).toString()
       });
 
-      alert('Zlecenie wysłane pomyślnie!');
+      alert('SYSTEM: Zlecenie wysłane! Sprawdź teraz arkusz.');
       orderForm.reset();
+      
+      const addr = orderForm.querySelector('input[name="Adres"]');
+      if (addr) addr.value = 'Szczecin i okolice';
+
     } catch (error) {
-      alert('Błąd wysyłki. Spróbuj ponownie.');
+      alert('BŁĄD: Nie udało się połączyć z bazą danych.');
+      console.error(error);
     }
   });
 </script>

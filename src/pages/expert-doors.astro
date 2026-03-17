@@ -191,82 +191,28 @@ const googleScriptUrl =
     </div>
   </footer>
 </MainLayout>
-
-<script>
-
+<script is:inline>
   const orderForm = document.querySelector('#order-form');
-  const orderStatus = document.querySelector('#order-form-status');
 
   orderForm?.addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    if (!(orderForm instanceof HTMLFormElement)) return;
-
-    const submitButton = orderForm.querySelector('button[type="submit"]');
-    if (submitButton instanceof HTMLButtonElement) {
-      submitButton.disabled = true;
-      submitButton.textContent = 'Wysyłanie...';
-    }
-
-    if (orderStatus) {
-      orderStatus.textContent = 'Trwa wysyłanie formularza...';
-      orderStatus.className = 'form-status';
-    }
-
     const formData = new FormData(orderForm);
-    formData.set('Data_zgloszenia', new Date().toISOString());
-
-    // Zgodność wsteczna: część starszych skryptów GAS czyta stare nazwy pól.
-    formData.set('name', String(formData.get('Zleceniodawca') ?? ''));
-    formData.set('phone', String(formData.get('Telefon') ?? ''));
-    formData.set('location', String(formData.get('Adres') ?? ''));
-    formData.set('service', String(formData.get('Typ_montazu') ?? ''));
-    formData.set('message', String(formData.get('Opis') ?? ''));
-
-    const payload = new URLSearchParams();
-    for (const [key, value] of formData.entries()) {
-      payload.append(key, String(value));
-    }
+    const scriptUrl = orderForm.action;
+    
+    // Zamieniamy dane z formularza na parametry w linku (tak jak nasz udany test)
+    const params = new URLSearchParams(formData).toString();
 
     try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 12000);
-      const response = await fetch(orderForm.action, {
+      await fetch(`${scriptUrl}?${params}`, {
         method: 'POST',
-        mode: 'cors',
-        headers: {
-          Accept: 'application/json, text/plain, */*',
-        },
-        body: payload,
-        signal: controller.signal,
+        mode: 'no-cors'
       });
-      clearTimeout(timeoutId);
 
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
-
-      if (orderStatus) {
-        orderStatus.textContent = 'Dziękujemy! Zgłoszenie zostało wysłane i potwierdzone przez serwer.';
-        orderStatus.className = 'form-status success';
-      }
-
+      alert('Zlecenie wysłane pomyślnie!');
       orderForm.reset();
-      const locationInput = orderForm.querySelector('input[name="Adres"]');
-      if (locationInput instanceof HTMLInputElement) {
-        locationInput.value = 'Szczecin i okolice';
-      }
     } catch (error) {
-      if (orderStatus) {
-        orderStatus.textContent = 'Nie udało się potwierdzić wysyłki formularza. Sprawdź połączenie lub zadzwoń do nas: +48 533 801 953.';
-        orderStatus.className = 'form-status error';
-      }
-      console.error('Błąd wysyłki formularza:', error);
-    } finally {
-      if (submitButton instanceof HTMLButtonElement) {
-        submitButton.disabled = false;
-        submitButton.textContent = 'Wyślij zlecenie';
-      }
+      alert('Błąd wysyłki. Spróbuj ponownie.');
     }
   });
 </script>

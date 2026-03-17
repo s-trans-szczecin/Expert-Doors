@@ -3,7 +3,7 @@ import MainLayout from '../layouts/MainLayout.astro';
 import OrbitGarageLogo from '../components/OrbitGarageLogo.astro';
 
 const googleScriptUrl =
-  'https://script.google.com/macros/s/AKfycbwU3fhD6psEceJSIBXLD13HQejVEAhjuHZqETst27tSzRnKEXkK_-bC5B7XIOm30tY/exec';
+  'https://script.google.com/macros/s/AKfycbxoJ6JBJO90fPm790Or1M3LnGrK6DthyQOpmcjUOtQsTwQzjG5kTLTTXyndUmO8LTtR/exec'';
 ---
 
 <MainLayout
@@ -192,41 +192,30 @@ const googleScriptUrl =
   </footer>
 </MainLayout>
 <script is:inline>
-  const orderForm = document.querySelector('#order-form');
+  const orderForm = document.querySelector('#order-form'); // Upewnij się, że id się zgadza
 
-  orderForm?.addEventListener('submit', async (event) => {
-    event.preventDefault();
-
-    // 1. Zbieramy dane z formularza
-    const formData = new FormData(orderForm);
-    const scriptUrl = orderForm.action;
+  orderForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
     
-    // 2. Budujemy prosty obiekt z danymi, żeby nic nie zginęło
-    const data = {};
-    formData.forEach((value, key) => {
-      data[key] = value;
-    });
+    // Tworzymy parametry tak jak w działającym teście
+    const formData = new URLSearchParams(new FormData(orderForm));
 
     try {
-      // 3. Wysyłamy metodą POST (najbezpieczniejsza)
-      await fetch(scriptUrl, {
+      // Wysyłka metodą, która w końcu zadziałała
+      await fetch(`${orderForm.action}?${formData.toString()}`, {
         method: 'POST',
-        mode: 'no-cors',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams(data).toString()
+        mode: 'no-cors'
       });
 
-      alert('SYSTEM: Zlecenie wysłane! Sprawdź teraz arkusz.');
+      alert('Dziękujemy! Zlecenie zostało wysłane.');
       orderForm.reset();
       
+      // Jeśli masz pole Adres, przywróć domyślną wartość
       const addr = orderForm.querySelector('input[name="Adres"]');
       if (addr) addr.value = 'Szczecin i okolice';
 
-    } catch (error) {
-      alert('BŁĄD: Nie udało się połączyć z bazą danych.');
-      console.error(error);
+    } catch (err) {
+      alert('Wystąpił błąd przy wysyłaniu. Spróbuj ponownie lub zadzwoń.');
     }
   });
 </script>

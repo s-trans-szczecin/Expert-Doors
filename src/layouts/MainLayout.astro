@@ -83,7 +83,7 @@ const isHomePath = Astro.url.pathname === '/expert-doors' || Astro.url.pathname 
       const botReply = (text) => {
         const query = text.toLowerCase();
         if (query.includes('cena') || query.includes('koszt') || query.includes('wycena')) {
-          return 'Ceny zależą od wymiaru i modelu. Wejdź na „Oferta cenowa” lub wyślij formularz — przygotujemy wycenę.';
+          return 'Ceny zależą od wymiaru i modelu. Wyślij formularz lub zadzwoń — przygotujemy wycenę indywidualną.';
         }
         if (query.includes('termin') || query.includes('pomiar') || query.includes('kiedy')) {
           return 'Pomiar i montaż realizujemy po wcześniejszym umówieniu. Napisz lokalizację i preferowany termin w formularzu.';

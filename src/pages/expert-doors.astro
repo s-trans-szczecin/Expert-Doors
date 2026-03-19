@@ -8,7 +8,7 @@ const googleScriptUrl =
 
 <MainLayout
   title="Expert Doors Szczecin | Montaż drzwi i bram garażowych"
-  description="Expert Doors Szczecin: montaż drzwi i bram garażowych w Szczecinie oraz województwie zachodniopomorskim. Zobacz ofertę usług i cennik."
+  description="Expert Doors Szczecin: montaż drzwi i bram garażowych w Szczecinie oraz województwie zachodniopomorskim. Zobacz ofertę usług i skontaktuj się po wycenę."
 >
   <header>
     <div class="container nav">
@@ -27,7 +27,6 @@ const googleScriptUrl =
         </p>
         <div class="cta-row">
           <a class="btn primary" href="#formularz">Wyślij zlecenie online</a>
-          <a class="btn secondary" href="/oferta-cenowa">Oferta cenowa</a>
         </div>
       </div>
       <OrbitGarageLogo />
@@ -138,16 +137,21 @@ const googleScriptUrl =
     <section id="formularz">
       <div class="panel">
         <h2 class="section-title">Formularz zlecenia</h2>
-        <p>Formularz wysyła dane do Google Apps Script / AppSheet (kolumny dopasowane do arkusza).</p>
-        <form method="POST" action={googleScriptUrl} id="order-form">
+        <p>Formularz wysyła dane bezpośrednio do Google Apps Script / AppSheet, z polami dopasowanymi do formularza w aplikacji.</p>
+        <iframe name="order-form-target" id="order-form-target" title="Ukryty cel wysyłki formularza" hidden></iframe>
+        <form method="POST" action={googleScriptUrl} id="order-form" target="order-form-target" accept-charset="UTF-8">
           <label>Imię i nazwisko <input name="Zleceniodawca" type="text" required /></label>
           <label>Telefon <input name="Telefon" type="tel" required /></label>
           <label>
-            Lokalizacja realizacji
+            Adres realizacji
             <input name="Adres" type="text" value="Szczecin i okolice" required />
           </label>
           <label>
-            Zakres usługi
+            Adres e-mail
+            <input name="Adres_mail" type="email" value="s.trans.szczecin@gmail.com" />
+          </label>
+          <label>
+            Typ montażu
             <select name="Typ_montazu" required>
               <option value="">Wybierz usługę</option>
               <option>Montaż drzwi wejściowych</option>
@@ -160,12 +164,16 @@ const googleScriptUrl =
           </label>
           <label>
             Opis zlecenia
-            <textarea name="Opis" placeholder="Napisz czego potrzebujesz" required></textarea>
+            <textarea name="Opis_zlecenia" placeholder="Napisz czego potrzebujesz" required></textarea>
           </label>
           <input type="hidden" name="ID" value="" />
           <input type="hidden" name="Numer_zlecenia" value="" />
-          <input type="hidden" name="Klient" value="" />
-          <input type="hidden" name="Termin" value="" />
+          <input type="hidden" name="Data_zgloszenia" value="" />
+          <input type="hidden" name="Opis" value="" />
+          <input type="hidden" name="Termin_proponowany" value="" />
+          <input type="hidden" name="Termin_zatwierdzony" value="" />
+          <input type="hidden" name="Pomiar" value="" />
+          <input type="hidden" name="Kosztorys" value="" />
           <input type="hidden" name="Status" value="Nowe" />
           <input type="hidden" name="Zdjecie_przed" value="" />
           <input type="hidden" name="Zdjecie_po" value="" />
@@ -193,14 +201,41 @@ const googleScriptUrl =
 </MainLayout>
 
 <script>
-
   const orderForm = document.querySelector('#order-form');
   const orderStatus = document.querySelector('#order-form-status');
+  const orderFrame = document.querySelector('#order-form-target');
+  let isOrderSubmitting = false;
+  let orderSubmitTimeout;
 
-  orderForm?.addEventListener('submit', async (event) => {
-    event.preventDefault();
-
+  const setFormField = (name, value) => {
     if (!(orderForm instanceof HTMLFormElement)) return;
+    const field = orderForm.querySelector(`[name="${name}"]`);
+    if (field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement || field instanceof HTMLSelectElement) {
+      field.value = value;
+    }
+  };
+
+  const resetOrderButton = () => {
+    if (!(orderForm instanceof HTMLFormElement)) return;
+    const submitButton = orderForm.querySelector('button[type="submit"]');
+    if (submitButton instanceof HTMLButtonElement) {
+      submitButton.disabled = false;
+      submitButton.textContent = 'Wyślij zlecenie';
+    }
+    isOrderSubmitting = false;
+  };
+
+  const restoreDefaults = () => {
+    if (!(orderForm instanceof HTMLFormElement)) return;
+    orderForm.reset();
+    setFormField('Adres', 'Szczecin i okolice');
+    setFormField('Adres_mail', 's.trans.szczecin@gmail.com');
+    setFormField('Status', 'Nowe');
+  };
+
+  orderForm?.addEventListener('submit', (event) => {
+    if (!(orderForm instanceof HTMLFormElement)) return;
+    event.preventDefault();
 
     const submitButton = orderForm.querySelector('button[type="submit"]');
     if (submitButton instanceof HTMLButtonElement) {
@@ -208,65 +243,37 @@ const googleScriptUrl =
       submitButton.textContent = 'Wysyłanie...';
     }
 
+    const opis = String(new FormData(orderForm).get('Opis_zlecenia') ?? '').trim();
+    setFormField('Data_zgloszenia', new Date().toISOString());
+    setFormField('Opis', opis);
+
     if (orderStatus) {
       orderStatus.textContent = 'Trwa wysyłanie formularza...';
       orderStatus.className = 'form-status';
     }
 
-    const formData = new FormData(orderForm);
-    formData.set('Data_zgloszenia', new Date().toISOString());
-
-    // Zgodność wsteczna: część starszych skryptów GAS czyta stare nazwy pól.
-    formData.set('name', String(formData.get('Zleceniodawca') ?? ''));
-    formData.set('phone', String(formData.get('Telefon') ?? ''));
-    formData.set('location', String(formData.get('Adres') ?? ''));
-    formData.set('service', String(formData.get('Typ_montazu') ?? ''));
-    formData.set('message', String(formData.get('Opis') ?? ''));
-
-    const payload = new URLSearchParams();
-    for (const [key, value] of formData.entries()) {
-      payload.append(key, String(value));
-    }
-
-    try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 12000);
-      const response = await fetch(orderForm.action, {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-          Accept: 'application/json, text/plain, */*',
-        },
-        body: payload,
-        signal: controller.signal,
-      });
-      clearTimeout(timeoutId);
-
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
-
+    window.clearTimeout(orderSubmitTimeout);
+    orderSubmitTimeout = window.setTimeout(() => {
+      if (!isOrderSubmitting) return;
       if (orderStatus) {
-        orderStatus.textContent = 'Dziękujemy! Zgłoszenie zostało wysłane i potwierdzone przez serwer.';
-        orderStatus.className = 'form-status success';
+        orderStatus.textContent = 'Formularz został wysłany, ale serwer nie zwrócił potwierdzenia. Jeśli nie widzisz zlecenia w arkuszu po chwili, zadzwoń: +48 533 801 953.';
+        orderStatus.className = 'form-status warning';
       }
+      resetOrderButton();
+    }, 15000);
 
-      orderForm.reset();
-      const locationInput = orderForm.querySelector('input[name="Adres"]');
-      if (locationInput instanceof HTMLInputElement) {
-        locationInput.value = 'Szczecin i okolice';
-      }
-    } catch (error) {
-      if (orderStatus) {
-        orderStatus.textContent = 'Nie udało się potwierdzić wysyłki formularza. Sprawdź połączenie lub zadzwoń do nas: +48 533 801 953.';
-        orderStatus.className = 'form-status error';
-      }
-      console.error('Błąd wysyłki formularza:', error);
-    } finally {
-      if (submitButton instanceof HTMLButtonElement) {
-        submitButton.disabled = false;
-        submitButton.textContent = 'Wyślij zlecenie';
-      }
+    isOrderSubmitting = true;
+    orderForm.submit();
+  });
+
+  orderFrame?.addEventListener('load', () => {
+    if (!isOrderSubmitting) return;
+    window.clearTimeout(orderSubmitTimeout);
+    if (orderStatus) {
+      orderStatus.textContent = 'Dziękujemy! Formularz został wysłany do systemu Expert Doors.';
+      orderStatus.className = 'form-status success';
     }
+    restoreDefaults();
+    resetOrderButton();
   });
 </script>

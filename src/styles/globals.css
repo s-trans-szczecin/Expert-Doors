@@ -229,7 +229,7 @@ footer {
 
 /* Animated logo */
 .orbit-logo {
-  width: min(100%, 96px);
+  width: min(100%, 300px);
   margin-inline: auto;
   position: relative;
   aspect-ratio: 1 / 1;
@@ -241,187 +241,302 @@ footer {
   margin-top: -1.1rem;
 }
 
-.orbit-shell {
+.expert-doors-logo__frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 32px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.expert-doors-logo__backdrop {
+  position: absolute;
+  inset: 8% 7%;
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 50% 38%, rgba(239, 68, 68, .18), transparent 32%),
+    linear-gradient(180deg, rgba(15, 23, 42, .96), rgba(2, 6, 23, .92));
+  border: 1px solid rgba(148, 163, 184, .22);
+  box-shadow: inset 0 0 36px rgba(15, 23, 42, .85), 0 24px 56px rgba(2, 6, 23, .45);
+}
+
+.expert-doors-logo__logo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 82%;
+  display: grid;
+  gap: .18rem;
+  text-transform: none;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  line-height: .82;
+  letter-spacing: -.03em;
+}
+
+.expert-doors-logo__logo--shadow {
+  filter: blur(10px);
+  opacity: .22;
+  transform: translate(-48%, -46%) scale(1.03);
+}
+
+.expert-doors-logo__logo--main {
+  animation: expert-logo-pulse 4.8s ease-in-out infinite;
+}
+
+.expert-doors-logo__row {
+  display: flex;
+  align-items: flex-start;
+}
+
+.expert-doors-logo__row--top {
+  justify-content: flex-start;
+}
+
+.expert-doors-logo__row--bottom {
+  justify-content: flex-start;
+  margin-left: 1.4rem;
+}
+
+.expert-doors-logo__initial,
+.expert-doors-logo__word {
+  position: relative;
+  z-index: 5;
+}
+
+.expert-doors-logo__initial {
+  font-size: clamp(5.4rem, 15vw, 7.3rem);
+  color: #e10600;
+  text-shadow: 0 1px 0 #fee2e2, 0 10px 24px rgba(225, 29, 72, .3);
+}
+
+.expert-doors-logo__word {
+  font-size: clamp(4.35rem, 12.8vw, 6.05rem);
+  color: #2f2f32;
+  text-shadow: 0 1px 0 rgba(255,255,255,.4), 0 3px 0 rgba(0,0,0,.42), 0 18px 30px rgba(15, 23, 42, .28);
+}
+
+.expert-doors-logo__portal {
+  position: absolute;
+  left: 36.5%;
+  top: 24%;
+  width: 29%;
+  height: 48%;
+  z-index: 2;
+  border-radius: 14px 14px 10px 10px;
+  overflow: hidden;
+  box-shadow: inset 0 0 18px rgba(0, 0, 0, .38);
+}
+
+.expert-doors-logo__portal::before {
+  content: '';
   position: absolute;
   inset: 0;
+  border: 2px solid rgba(226, 232, 240, .2);
+  border-bottom-width: 4px;
+  border-radius: inherit;
+  z-index: 4;
   pointer-events: none;
 }
 
-.orbit-ring {
+.expert-doors-logo__opening-glow {
   position: absolute;
-  left: 8%;
-  right: 8%;
-  top: 34%;
-  height: 30%;
-  border: 1px dashed rgba(245, 158, 11, 0.45);
-  border-radius: 50%;
-  transform: rotate(-8deg);
-  opacity: .68;
+  inset: 8% 14% 14%;
+  background: radial-gradient(circle at 50% 28%, rgba(248, 250, 252, .9), rgba(248, 113, 113, .18) 48%, transparent 70%);
+  opacity: 0;
+  filter: blur(2px);
+  animation: portal-glow 4.8s ease-in-out infinite;
 }
 
-.orbit-label {
+.expert-doors-logo__door {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  color: #e5e7eb;
-  font-weight: 800;
-  letter-spacing: .6px;
-  white-space: nowrap;
-  font-size: .46rem;
-  background: rgba(2, 6, 23, .92);
-  padding: .14rem .32rem;
-  border-radius: 999px;
-  border: 1px solid rgba(245, 158, 11, .45);
-  box-shadow: 0 0 20px rgba(245, 158, 11, .2);
-}
-
-.orbit-label--back { z-index: 1; animation: orbit-pass-behind 6s linear infinite; }
-
-.orbit-label--front { z-index: 5; animation: orbit-pass-front 6s linear infinite; animation-delay: -3s; }
-
-.logo-initial {
-  color: #ef4444;
-  font-weight: 800;
-}
-
-.orbit-dot {
-  color: #f97316;
-  font-weight: 900;
-  margin: 0 .2rem;
-}
-
-.garage-scene {
-  width: 78%;
-  aspect-ratio: 4/3;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  background: linear-gradient(180deg, #1e293b, #0b1222);
-  display: grid;
-  place-items: center;
-  z-index: 3;
-}
-
-.garage-box {
-  width: 86%;
-  height: 76%;
-  position: relative;
-  border: 2px solid var(--primary);
-  border-bottom-width: 4px;
-  border-radius: 8px;
-  overflow: hidden;
-  background: #0b1222;
-}
-
-.garage-door {
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    to bottom,
-    #d1d5db 0,
-    #d1d5db 14px,
-    #9ca3af 14px,
-    #9ca3af 16px
-  );
-  transform-origin: top center;
-  animation: garage-open 6s ease-in-out infinite;
-  z-index: 3;
-}
-
-.car-track {
-  position: absolute;
-  inset: auto 0 10px 0;
-  height: 48px;
-  z-index: 2;
-}
-
-.car {
-  position: absolute;
-  left: -86px;
-  bottom: 2px;
-  width: 72px;
-  height: 26px;
-  animation: car-drive 6s ease-in-out infinite;
-  filter: drop-shadow(0 4px 10px rgba(239, 68, 68, .35));
-}
-
-.car-body {
-  position: absolute;
-  inset: 14px 0 3px 0;
-  background: linear-gradient(135deg, #ff3b30 0%, #b10f0f 55%, #7f0d0d 100%);
-  border-radius: 10px 30px 8px 18px;
-  border: 2px solid #ffd4d4;
-}
-
-.car-cockpit {
-  position: absolute;
-  left: 38px;
-  top: 4px;
-  width: 52px;
-  height: 15px;
-  border-radius: 18px 18px 10px 10px;
-  background: linear-gradient(180deg, #111827 0%, #334155 100%);
-  border: 1px solid #cbd5e1;
-}
-
-.car-spoiler {
-  position: absolute;
-  left: 4px;
-  top: 10px;
-  width: 24px;
-  height: 4px;
-  border-radius: 4px;
-  background: #f8fafc;
-}
-
-.car-front-wing {
-  position: absolute;
-  right: -6px;
-  top: 20px;
-  width: 18px;
-  height: 7px;
-  border-radius: 0 6px 6px 0;
-  background: #fecaca;
-}
-
-.wheel {
-  position: absolute;
+  top: 0;
   bottom: 0;
-  width: 9px;
-  height: 9px;
+  width: 52%;
+  background: linear-gradient(180deg, #ef4444 0%, #991b1b 100%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14), inset 0 -12px 18px rgba(0, 0, 0, .28);
+  z-index: 3;
+}
+
+.expert-doors-logo__door--left {
+  left: 0;
+  transform-origin: left center;
+  animation: door-left-open 4.8s ease-in-out infinite;
+}
+
+.expert-doors-logo__door--right {
+  right: 0;
+  transform-origin: right center;
+  animation: door-right-open 4.8s ease-in-out infinite;
+}
+
+.expert-doors-logo__worker {
+  position: absolute;
+  left: 50%;
+  bottom: 8%;
+  width: 18%;
+  height: 40%;
+  transform: translateX(-50%) translateY(20px) scale(.72);
+  opacity: 0;
+  z-index: 2;
+  animation: worker-rise 4.8s ease-in-out infinite;
+}
+
+.expert-doors-logo__helmet,
+.expert-doors-logo__head,
+.expert-doors-logo__body,
+.expert-doors-logo__arm,
+.expert-doors-logo__leg {
+  position: absolute;
+  display: block;
+}
+
+.expert-doors-logo__helmet {
+  left: 50%;
+  top: 5%;
+  width: 50%;
+  height: 16%;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, #fb923c, #ea580c);
+  border-radius: 999px 999px 10px 10px;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.18);
+}
+
+.expert-doors-logo__head {
+  left: 50%;
+  top: 16%;
+  width: 34%;
+  height: 16%;
+  transform: translateX(-50%);
+  background: #f8d6bf;
   border-radius: 50%;
-  background: #111827;
-  border: 2px solid #e2e8f0;
-}
-.wheel.left { left: 10px; }
-.wheel.right { right: 10px; }
-
-@keyframes orbit-pass-behind {
-  0% { transform: translate(-50%, -50%) translate(-56px, -2px) scale(.88); opacity: .7; }
-  25% { transform: translate(-50%, -50%) translate(0, -14px) scale(.82); opacity: .56; }
-  50% { transform: translate(-50%, -50%) translate(56px, -2px) scale(.88); opacity: .7; }
-  75% { transform: translate(-50%, -50%) translate(0, 14px) scale(1.02); opacity: .96; }
-  100% { transform: translate(-50%, -50%) translate(-56px, -2px) scale(.88); opacity: .7; }
 }
 
-@keyframes orbit-pass-front {
-  0% { transform: translate(-50%, -50%) translate(-56px, -2px) scale(.88); opacity: .7; }
-  25% { transform: translate(-50%, -50%) translate(0, -14px) scale(.82); opacity: .56; }
-  50% { transform: translate(-50%, -50%) translate(56px, -2px) scale(.88); opacity: .7; }
-  75% { transform: translate(-50%, -50%) translate(0, 14px) scale(1.02); opacity: .96; }
-  100% { transform: translate(-50%, -50%) translate(-56px, -2px) scale(.88); opacity: .7; }
+.expert-doors-logo__body {
+  left: 50%;
+  top: 31%;
+  width: 44%;
+  height: 30%;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, #facc15, #f59e0b);
+  border-radius: 12px 12px 8px 8px;
 }
 
-@keyframes garage-open {
-  0%, 18%, 82%, 100% { transform: translateY(0); }
-  28%, 72% { transform: translateY(-105%); }
+.expert-doors-logo__arm {
+  top: 35%;
+  width: 12%;
+  height: 26%;
+  background: #f8d6bf;
+  border-radius: 999px;
 }
 
-@keyframes car-drive {
-  0%, 12% { transform: translateX(0); opacity: 0; }
-  20%, 36% { transform: translateX(125px); opacity: 1; }
-  44%, 55% { transform: translateX(230px); opacity: 1; }
-  68%, 86% { transform: translateX(365px); opacity: 1; }
-  100% { transform: translateX(520px); opacity: 0; }
+.expert-doors-logo__arm--left {
+  left: 24%;
+  transform: rotate(24deg);
+}
+
+.expert-doors-logo__arm--right {
+  right: 24%;
+  transform: rotate(-24deg);
+}
+
+.expert-doors-logo__leg {
+  top: 58%;
+  width: 14%;
+  height: 30%;
+  background: linear-gradient(180deg, #475569, #1e293b);
+  border-radius: 999px;
+}
+
+.expert-doors-logo__leg--left {
+  left: 35%;
+  transform: rotate(9deg);
+}
+
+.expert-doors-logo__leg--right {
+  right: 35%;
+  transform: rotate(-9deg);
+}
+
+.expert-doors-logo__burst {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  width: 58%;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(248, 250, 252, .95), transparent);
+  opacity: 0;
+  z-index: 1;
+}
+
+.expert-doors-logo__burst--one {
+  animation: burst-line-1 4.8s ease-in-out infinite;
+}
+
+.expert-doors-logo__burst--two {
+  animation: burst-line-2 4.8s ease-in-out infinite;
+}
+
+.expert-doors-logo__burst--three {
+  animation: burst-line-3 4.8s ease-in-out infinite;
+}
+
+.expert-doors-logo__burst--four {
+  animation: burst-line-4 4.8s ease-in-out infinite;
+}
+
+@keyframes expert-logo-pulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(.985); }
+  44%, 78% { transform: translate(-50%, -50%) scale(1); }
+  88% { transform: translate(-50%, -50%) scale(1.03); }
+}
+
+@keyframes door-left-open {
+  0%, 14%, 100% { transform: translateX(0); }
+  28%, 72% { transform: translateX(-88%) rotateY(28deg); }
+  84% { transform: translateX(-6%); }
+}
+
+@keyframes door-right-open {
+  0%, 14%, 100% { transform: translateX(0); }
+  28%, 72% { transform: translateX(88%) rotateY(-28deg); }
+  84% { transform: translateX(6%); }
+}
+
+@keyframes portal-glow {
+  0%, 16%, 100% { opacity: 0; transform: scale(.75); }
+  28%, 68% { opacity: 1; transform: scale(1); }
+  86% { opacity: .25; transform: scale(1.15); }
+}
+
+@keyframes worker-rise {
+  0%, 18%, 100% { opacity: 0; transform: translateX(-50%) translateY(20px) scale(.72); }
+  32%, 58% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+  76% { opacity: 1; transform: translateX(-50%) translateY(-14px) scale(1.06); }
+  88% { opacity: 0; transform: translateX(-50%) translateY(-34px) scale(1.45); }
+}
+
+@keyframes burst-line-1 {
+  0%, 70%, 100% { opacity: 0; transform: translate(-50%, -50%) rotate(0deg) scale(.2); }
+  82% { opacity: .95; transform: translate(-50%, -50%) rotate(0deg) scale(1.9); }
+}
+
+@keyframes burst-line-2 {
+  0%, 70%, 100% { opacity: 0; transform: translate(-50%, -50%) rotate(45deg) scale(.2); }
+  82% { opacity: .8; transform: translate(-50%, -50%) rotate(45deg) scale(1.7); }
+}
+
+@keyframes burst-line-3 {
+  0%, 70%, 100% { opacity: 0; transform: translate(-50%, -50%) rotate(90deg) scale(.2); }
+  82% { opacity: .88; transform: translate(-50%, -50%) rotate(90deg) scale(1.55); }
+}
+
+@keyframes burst-line-4 {
+  0%, 70%, 100% { opacity: 0; transform: translate(-50%, -50%) rotate(135deg) scale(.2); }
+  82% { opacity: .8; transform: translate(-50%, -50%) rotate(135deg) scale(1.7); }
 }
 
 .service-gallery {
@@ -740,4 +855,161 @@ footer {
     flex-direction: column;
     align-items: stretch;
   }
+}
+
+
+/* Inline fallback logo */
+.orbit-logo-inline {
+  position: relative;
+  width: min(100%, 180px);
+  aspect-ratio: 1 / 1;
+  justify-self: end;
+  align-self: start;
+  margin-top: .25rem;
+}
+
+.orbit-logo-inline__garage {
+  position: absolute;
+  inset: 22% 18% 18%;
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255,255,255,.88), rgba(221,228,238,.92));
+  border: 2px solid rgba(148, 163, 184, .7);
+  box-shadow: 0 18px 32px rgba(15, 23, 42, .18);
+  overflow: hidden;
+  z-index: 3;
+}
+
+.orbit-logo-inline__garage-head {
+  position: absolute;
+  inset: 12% 28% auto;
+  height: 12%;
+  background: linear-gradient(180deg, #cbd5e1, #94a3b8);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  z-index: 4;
+}
+
+.orbit-logo-inline__door-frame {
+  position: absolute;
+  inset: 18% 17% 12%;
+  border-radius: 10px 10px 8px 8px;
+  background: linear-gradient(180deg, #111827, #334155);
+  overflow: hidden;
+}
+
+.orbit-logo-inline__door {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 51%;
+  background: repeating-linear-gradient(to bottom, #ef4444 0, #ef4444 14px, #b91c1c 14px, #b91c1c 16px);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.18);
+  z-index: 2;
+}
+
+.orbit-logo-inline__door--left {
+  left: 0;
+  transform-origin: left center;
+  animation: inline-door-left 4.6s ease-in-out infinite;
+}
+
+.orbit-logo-inline__door--right {
+  right: 0;
+  transform-origin: right center;
+  animation: inline-door-right 4.6s ease-in-out infinite;
+}
+
+.orbit-logo-inline__worker {
+  position: absolute;
+  left: 50%;
+  bottom: 8%;
+  width: 30%;
+  height: 54%;
+  transform: translateX(-50%) translateY(18px) scale(.78);
+  opacity: 0;
+  animation: inline-worker 4.6s ease-in-out infinite;
+  z-index: 1;
+}
+
+.orbit-logo-inline__helmet, .orbit-logo-inline__head, .orbit-logo-inline__body, .orbit-logo-inline__arm, .orbit-logo-inline__leg {
+  position: absolute;
+  display: block;
+}
+
+.orbit-logo-inline__helmet { left: 50%; top: 2%; width: 52%; height: 14%; transform: translateX(-50%); background: #f59e0b; border-radius: 999px 999px 8px 8px; }
+.orbit-logo-inline__head { left: 50%; top: 13%; width: 30%; height: 15%; transform: translateX(-50%); background: #f3d6bd; border-radius: 50%; }
+.orbit-logo-inline__body { left: 50%; top: 30%; width: 42%; height: 29%; transform: translateX(-50%); background: linear-gradient(180deg,#facc15,#f59e0b); border-radius: 10px; }
+.orbit-logo-inline__arm { top: 34%; width: 11%; height: 24%; background: #f3d6bd; border-radius: 999px; }
+.orbit-logo-inline__arm--left { left: 24%; transform: rotate(18deg); }
+.orbit-logo-inline__arm--right { right: 24%; transform: rotate(-18deg); }
+.orbit-logo-inline__leg { top: 56%; width: 12%; height: 28%; background: #475569; border-radius: 999px; }
+.orbit-logo-inline__leg--left { left: 36%; transform: rotate(7deg); }
+.orbit-logo-inline__leg--right { right: 36%; transform: rotate(-7deg); }
+
+.orbit-logo-inline__orbit {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 150%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .04em;
+  color: #1f2937;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.orbit-logo-inline__orbit::first-letter { color: #dc2626; }
+
+.orbit-logo-inline__orbit--one {
+  animation: inline-orbit-one 8s linear infinite;
+}
+
+.orbit-logo-inline__orbit--two {
+  animation: inline-orbit-two 8s linear infinite;
+}
+
+.orbit-logo-inline__orbit .accent,
+.orbit-logo-inline__orbit strong { color: #dc2626; }
+
+@keyframes inline-door-left {
+  0%, 16%, 100% { transform: translateX(0); }
+  28%, 70% { transform: translateX(-88%) rotateY(32deg); }
+}
+
+@keyframes inline-door-right {
+  0%, 16%, 100% { transform: translateX(0); }
+  28%, 70% { transform: translateX(88%) rotateY(-32deg); }
+}
+
+@keyframes inline-worker {
+  0%, 20%, 100% { opacity: 0; transform: translateX(-50%) translateY(18px) scale(.78); }
+  34%, 62% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+  78% { opacity: 0; transform: translateX(-50%) translateY(-10px) scale(1.08); }
+}
+
+@keyframes inline-orbit-one {
+  0% { transform: translate(-50%, -50%) rotate(0deg) translateY(-62px) rotate(0deg); opacity: .25; }
+  24% { opacity: .95; }
+  50% { transform: translate(-50%, -50%) rotate(180deg) translateY(-62px) rotate(-180deg); opacity: .25; }
+  74% { opacity: .95; }
+  100% { transform: translate(-50%, -50%) rotate(360deg) translateY(-62px) rotate(-360deg); opacity: .25; }
+}
+
+@keyframes inline-orbit-two {
+  0% { transform: translate(-50%, -50%) rotate(180deg) translateY(-62px) rotate(-180deg); opacity: .95; }
+  50% { transform: translate(-50%, -50%) rotate(360deg) translateY(-62px) rotate(-360deg); opacity: .25; }
+  100% { transform: translate(-50%, -50%) rotate(540deg) translateY(-62px) rotate(-540deg); opacity: .95; }
+}
+
+@media (max-width: 900px) {
+  .orbit-logo-inline {
+    position: fixed;
+    left: .8rem;
+    top: .8rem;
+    width: 118px;
+    z-index: 45;
+  }
+  .orbit-logo-inline__orbit { font-size: .54rem; }
 }

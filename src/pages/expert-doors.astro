@@ -2,7 +2,8 @@
 import MainLayout from '../layouts/MainLayout.astro';
 import OrbitGarageLogo from '../components/OrbitGarageLogo.astro';
 
-const googleScriptUrl =  'https://script.google.com/macros/s/AKfycbyrSjLLM4GyUDMsdI6odVIbr3dD2CncA2uSwnAV7tCqicHyWd6Zp8YjDSLbP8ecFSjW/exec';
+const googleScriptUrl =
+  'https://script.google.com/macros/s/AKfycbyrSjLLM4GyUDMsdI6odVIbr3dD2CncA2uSwnAV7tCqicHyWd6Zp8YjDSLbP8ecFSjW/exec';
 ---
 
 <MainLayout
@@ -15,7 +16,6 @@ const googleScriptUrl =  'https://script.google.com/macros/s/AKfycbyrSjLLM4GyUDM
       <a href="/pobierz-aplikacje" class="btn secondary">Pobierz aplikację</a>
     </div>
   </header>
-  
 
   <main class="container">
     <section class="hero" id="start">
@@ -135,58 +135,47 @@ const googleScriptUrl =  'https://script.google.com/macros/s/AKfycbyrSjLLM4GyUDM
       </div>
     </section>
 
- <section id="formularz">
-  <div class="panel">
-    <h2 class="section-title">Formularz zlecenia</h2>
-    <p>Wypełnij poniższe dane, aby otrzymać wycenę zlecenia.</p>
-    
-    <form method="POST" action={googleScriptUrl} id="order-form">
-      <label>Imię i nazwisko <input name="Zleceniodawca" type="text" required /></label>
-      
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-        <label>Telefon <input name="Telefon" type="tel" required /></label>
-        <label>Adres e-mail <input name="Adres_mail" type="email" required /></label>
+    <section id="formularz">
+      <div class="panel">
+        <h2 class="section-title">Formularz zlecenia</h2>
+        <p>Formularz wysyła dane do Google Apps Script / AppSheet (kolumny dopasowane do arkusza).</p>
+        <form method="POST" action={googleScriptUrl} id="order-form">
+          <label>Imię i nazwisko <input name="Zleceniodawca" type="text" required /></label>
+          <label>Telefon <input name="Telefon" type="tel" required /></label>
+          <label>
+            Lokalizacja realizacji
+            <input name="Adres" type="text" value="Szczecin i okolice" required />
+          </label>
+          <label>
+            Zakres usługi
+            <select name="Typ_montazu" required>
+              <option value="">Wybierz usługę</option>
+              <option>Montaż drzwi wejściowych</option>
+              <option>Montaż drzwi segmentowych</option>
+              <option>Montaż drzwi wewnętrznych</option>
+              <option>Automatyka bram</option>
+              <option>Serwis i regulacje</option>
+              <option>Montaż i pomiar</option>
+            </select>
+          </label>
+          <label>
+            Opis zlecenia
+            <textarea name="Opis" placeholder="Napisz czego potrzebujesz" required></textarea>
+          </label>
+          <input type="hidden" name="ID" value="" />
+          <input type="hidden" name="Numer_zlecenia" value="" />
+          <input type="hidden" name="Klient" value="" />
+          <input type="hidden" name="Termin" value="" />
+          <input type="hidden" name="Status" value="Nowe" />
+          <input type="hidden" name="Zdjecie_przed" value="" />
+          <input type="hidden" name="Zdjecie_po" value="" />
+          <input type="hidden" name="Podpis_klienta" value="" />
+          <input type="hidden" name="Uwagi" value="" />
+          <button type="submit" class="btn primary">Wyślij zlecenie</button>
+          <p id="order-form-status" class="form-status" aria-live="polite"></p>
+        </form>
       </div>
-
-      <label>Lokalizacja realizacji <input name="Adres" type="text" value="Szczecin i okolice" required /></label>
-      
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-        <label>Zakres usługi
-          <select name="Typ_montazu" required>
-            <option value="">Wybierz usługę</option>
-            <option>Montaż drzwi wejściowych</option>
-            <option>Montaż drzwi segmentowych</option>
-            <option>Montaż drzwi wewnętrznych</option>
-            <option>Automatyka bram</option>
-            <option>Serwis i regulacje</option>
-            <option>Montaż i pomiar</option>
-          </select>
-        </label>
-        <label>Proponowany termin <input name="Termin_proponowany" type="date" /></label>
-      </div>
-
-      <label>Opis zlecenia 
-        <textarea name="Opis_zlecenia" placeholder="Napisz czego potrzebujesz (ilość drzwi, wymiary bramy itp.)" required></textarea>
-      </label>
-
-      <label>Dodatkowe uwagi dla montera
-        <textarea name="Uwagi" placeholder="Np. kod do bramy, preferowane godziny kontaktu"></textarea>
-      </label>
-
-      <input type="hidden" name="ID" value="" />
-      <input type="hidden" name="Numer_zlecenia" value="" />
-      <input type="hidden" name="Status" value="Nowe" />
-      <input type="hidden" name="Klient" value="" />
-      <input type="hidden" name="Termin" value="" />
-      <input type="hidden" name="Zdjecie_przed" value="" />
-      <input type="hidden" name="Zdjecie_po" value="" />
-      <input type="hidden" name="Podpis_klienta" value="" />
-
-      <button type="submit" class="btn primary">Wyślij zlecenie</button>
-      <p id="order-form-status" class="form-status" aria-live="polite"></p>
-    </form>
-  </div>
-</section>
+    </section>
   </main>
 
   <footer>
@@ -203,57 +192,81 @@ const googleScriptUrl =  'https://script.google.com/macros/s/AKfycbyrSjLLM4GyUDM
   </footer>
 </MainLayout>
 
-<script is:inline>
+<script>
+
   const orderForm = document.querySelector('#order-form');
   const orderStatus = document.querySelector('#order-form-status');
 
   orderForm?.addEventListener('submit', async (event) => {
     event.preventDefault();
 
+    if (!(orderForm instanceof HTMLFormElement)) return;
+
     const submitButton = orderForm.querySelector('button[type="submit"]');
-    submitButton.disabled = true;
-    submitButton.textContent = 'Wysyłanie...';
+    if (submitButton instanceof HTMLButtonElement) {
+      submitButton.disabled = true;
+      submitButton.textContent = 'Wysyłanie...';
+    }
+
+    if (orderStatus) {
+      orderStatus.textContent = 'Trwa wysyłanie formularza...';
+      orderStatus.className = 'form-status';
+    }
 
     const formData = new FormData(orderForm);
-    
-    // Ustawiamy datę w formacie czytelnym dla Polaka
-    formData.set('Data_zgloszenia', new Date().toLocaleString('pl-PL'));
-    
-    // Generujemy ID i Numer zlecenia, żeby nie były puste
-    formData.set('ID', 'WEB-' + Date.now());
-    formData.set('Numer_zlecenia', 'OG-' + Math.floor(Math.random() * 9000));
+    formData.set('Data_zgloszenia', new Date().toISOString());
 
-    // Tworzymy paczkę danych do wysyłki
-    const params = new URLSearchParams();
+    // Zgodność wsteczna: część starszych skryptów GAS czyta stare nazwy pól.
+    formData.set('name', String(formData.get('Zleceniodawca') ?? ''));
+    formData.set('phone', String(formData.get('Telefon') ?? ''));
+    formData.set('location', String(formData.get('Adres') ?? ''));
+    formData.set('service', String(formData.get('Typ_montazu') ?? ''));
+    formData.set('message', String(formData.get('Opis') ?? ''));
+
+    const payload = new URLSearchParams();
     for (const [key, value] of formData.entries()) {
-      params.append(key, value);
+      payload.append(key, String(value));
     }
 
     try {
-      // Używamy metody, która zadziałała w Twoim teście
-      await fetch(`${orderForm.action}?${params.toString()}`, {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 12000);
+      const response = await fetch(orderForm.action, {
         method: 'POST',
-        mode: 'no-cors'
+        mode: 'cors',
+        headers: {
+          Accept: 'application/json, text/plain, */*',
+        },
+        body: payload,
+        signal: controller.signal,
       });
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
 
       if (orderStatus) {
-        orderStatus.textContent = 'Dziękujemy! Zlecenie zostało zapisane w arkuszu.';
-        orderStatus.style.color = '#28a745';
+        orderStatus.textContent = 'Dziękujemy! Zgłoszenie zostało wysłane i potwierdzone przez serwer.';
+        orderStatus.className = 'form-status success';
       }
-      orderForm.reset();
-      
-      // Przywracamy domyślną lokalizację
-      const loc = orderForm.querySelector('input[name="Adres"]');
-      if (loc) loc.value = 'Szczecin i okolice';
 
+      orderForm.reset();
+      const locationInput = orderForm.querySelector('input[name="Adres"]');
+      if (locationInput instanceof HTMLInputElement) {
+        locationInput.value = 'Szczecin i okolice';
+      }
     } catch (error) {
       if (orderStatus) {
-        orderStatus.textContent = 'Błąd wysyłki. Spróbuj ponownie.';
-        orderStatus.style.color = '#dc3545';
+        orderStatus.textContent = 'Nie udało się potwierdzić wysyłki formularza. Sprawdź połączenie lub zadzwoń do nas: +48 533 801 953.';
+        orderStatus.className = 'form-status error';
       }
+      console.error('Błąd wysyłki formularza:', error);
     } finally {
-      submitButton.disabled = false;
-      submitButton.textContent = 'Wyślij zlecenie';
+      if (submitButton instanceof HTMLButtonElement) {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Wyślij zlecenie';
+      }
     }
   });
 </script>

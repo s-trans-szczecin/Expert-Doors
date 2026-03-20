@@ -1,38 +1,272 @@
 ---
-// src/pages/test-form.astro
-const googleUrl = 'https://script.google.com/macros/s/AKfycbyrSjLLM4GyUDMsdI6odVIbr3dD2CncA2uSwnAV7tCqicHyWd6Zp8YjDSLbP8ecFSjW/exec';
+import MainLayout from '../layouts/MainLayout.astro';
+import OrbitGarageLogo from '../components/OrbitGarageLogo.astro';
+
+const googleScriptUrl =
+  'https://script.google.com/macros/s/AKfycbyrSjLLM4GyUDMsdI6odVIbr3dD2CncA2uSwnAV7tCqicHyWd6Zp8YjDSLbP8ecFSjW/exec';
 ---
 
-<html>
-<head><title>Test Formularza</title></head>
-<body>
-  <h1>Test zapisu do arkusza</h1>
-  
-  <form id="test-form" action={googleUrl}>
-    <input name="Nazwisko" type="text" placeholder="Imię i Nazwisko" required /><br><br>
-    <input name="Telefon" type="text" placeholder="Telefon" required /><br><br>
-    <input name="Email" type="email" placeholder="Email" required /><br><br>
-    <textarea name="Wiadomosc" placeholder="Wiadomość"></textarea><br><br>
-    <button type="submit">WYŚLIJ TEST</button>
-  </form>
+<MainLayout
+  title="Expert Doors Szczecin | Montaż drzwi i bram garażowych"
+  description="Expert Doors Szczecin: montaż drzwi i bram garażowych w Szczecinie oraz województwie zachodniopomorskim. Zobacz ofertę usług i cennik."
+>
+  <header>
+    <div class="container nav">
+      <div class="brand">Expert <span>Doors</span></div>
+      <a href="/pobierz-aplikacje" class="btn secondary">Pobierz aplikację</a>
+    </div>
+  </header>
 
-  <script is:inline>
-    const form = document.querySelector('#test-form');
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const formData = new URLSearchParams(new FormData(form));
+  <main class="container">
+    <section class="hero" id="start">
+      <div>
+        <h1>Kompleksowy montaż drzwi i bram garażowych</h1>
+        <p class="lead">
+          Działamy głównie w Szczecinie oraz na terenie województwa zachodniopomorskiego. Realizujemy pomiar, doradztwo, dostawę, montaż i
+          serwis drzwi oraz bram garażowych dla klientów indywidualnych i firm.
+        </p>
+        <div class="cta-row">
+          <a class="btn primary" href="#formularz">Wyślij zlecenie online</a>
+          <a class="btn secondary" href="/oferta-cenowa">Oferta cenowa</a>
+        </div>
+      </div>
+      <OrbitGarageLogo />
+    </section>
 
-      try {
-        await fetch(`${form.action}?${formData.toString()}`, {
-          method: 'POST',
-          mode: 'no-cors'
-        });
-        alert('Wysłano! Sprawdź arkusz.');
-        form.reset();
-      } catch (err) {
-        alert('Błąd: ' + err);
+    <section id="oferta">
+      <h2 class="section-title">Nasze podstrony usług</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>Drzwi wejściowe</h3>
+          <p>Montaż drzwi stalowych, aluminiowych i antywłamaniowych.</p>
+          <a class="service-door-link" href="/drzwi-wejsciowe">
+            <span class="door-visual" aria-hidden="true">
+              <span class="door-panel"></span>
+              <span class="door-handle"></span>
+              <span class="door-sign">Zobacz usługę</span>
+            </span>
+          </a>
+        </article>
+        <article class="card">
+          <h3>Drzwi segmentowe</h3>
+          <p>Nowoczesne bramy segmentowe z automatyką i bezpieczeństwem.</p>
+          <a class="service-door-link" href="/drzwi-segmentowe">
+            <span class="door-visual" aria-hidden="true">
+              <span class="door-panel"></span>
+              <span class="door-handle"></span>
+              <span class="door-sign">Zobacz usługę</span>
+            </span>
+          </a>
+        </article>
+        <article class="card">
+          <h3>Drzwi wewnętrzne</h3>
+          <p>Ościeżnice, skrzydła, regulacja i estetyczne wykończenia.</p>
+          <a class="service-door-link" href="/drzwi-wewnetrzne">
+            <span class="door-visual" aria-hidden="true">
+              <span class="door-panel"></span>
+              <span class="door-handle"></span>
+              <span class="door-sign">Zobacz usługę</span>
+            </span>
+          </a>
+        </article>
+        <article class="card">
+          <h3>Automatyka bram</h3>
+          <p>Napędy, piloty, czujniki bezpieczeństwa i konfiguracja sterowań.</p>
+          <a class="service-door-link" href="/automatyka-bram">
+            <span class="door-visual" aria-hidden="true">
+              <span class="door-panel"></span>
+              <span class="door-handle"></span>
+              <span class="door-sign">Zobacz usługę</span>
+            </span>
+          </a>
+        </article>
+        <article class="card">
+          <h3>Serwis i regulacje</h3>
+          <p>Przeglądy okresowe, awarie i precyzyjna regulacja mechaniki.</p>
+          <a class="service-door-link" href="/serwis-i-regulacje">
+            <span class="door-visual" aria-hidden="true">
+              <span class="door-panel"></span>
+              <span class="door-handle"></span>
+              <span class="door-sign">Zobacz usługę</span>
+            </span>
+          </a>
+        </article>
+        <article class="card">
+          <h3>Montaż i pomiar</h3>
+          <p>Dokładny pomiar na miejscu i profesjonalny montaż zgodny z normami.</p>
+          <a class="service-door-link" href="/montaz-i-pomiar">
+            <span class="door-visual" aria-hidden="true">
+              <span class="door-panel"></span>
+              <span class="door-handle"></span>
+              <span class="door-sign">Zobacz usługę</span>
+            </span>
+          </a>
+        </article>
+      </div>
+    </section>
+
+    <section id="realizacje">
+      <h2 class="section-title">Przykładowe realizacje i wykonania</h2>
+      <div class="gallery">
+        <figure class="realization-card">
+          <img src="/images/expert-doors/realizacje/realizacja-01.jpg" alt="Drzwi wejściowe – realizacja 01" loading="lazy" onerror="this.onerror=null;this.src='/images/expert-doors/gallery-1.svg';"/>
+          <figcaption>Drzwi wejściowe — realizacja 01 (podmień plik: <code>public/images/expert-doors/realizacje/realizacja-01.jpg</code>)</figcaption>
+        </figure>
+        <figure class="realization-card">
+          <img src="/images/expert-doors/realizacje/realizacja-02.jpg" alt="Brama segmentowa – realizacja 02" loading="lazy" onerror="this.onerror=null;this.src='/images/expert-doors/gallery-2.svg';"/>
+          <figcaption>Brama segmentowa — realizacja 02 (podmień plik: <code>realizacja-02.jpg</code>)</figcaption>
+        </figure>
+        <figure class="realization-card">
+          <img src="/images/expert-doors/realizacje/realizacja-03.jpg" alt="Drzwi wewnętrzne – realizacja 03" loading="lazy" onerror="this.onerror=null;this.src='/images/expert-doors/gallery-3.svg';"/>
+          <figcaption>Drzwi wewnętrzne — realizacja 03 (podmień plik: <code>realizacja-03.jpg</code>)</figcaption>
+        </figure>
+        <figure class="realization-card">
+          <img src="/images/expert-doors/realizacje/realizacja-04.jpg" alt="Automatyka bram – realizacja 04" loading="lazy" onerror="this.onerror=null;this.src='/images/expert-doors/gallery-4.svg';"/>
+          <figcaption>Automatyka bram — realizacja 04 (podmień plik: <code>realizacja-04.jpg</code>)</figcaption>
+        </figure>
+        <figure class="realization-card">
+          <img src="/images/expert-doors/realizacje/realizacja-05.jpg" alt="Serwis i regulacje – realizacja 05" loading="lazy" onerror="this.onerror=null;this.src='/images/expert-doors/gallery-5.svg';"/>
+          <figcaption>Serwis i regulacje — realizacja 05 (podmień plik: <code>realizacja-05.jpg</code>)</figcaption>
+        </figure>
+        <figure class="realization-card">
+          <img src="/images/expert-doors/realizacje/realizacja-06.jpg" alt="Montaż i pomiar – realizacja 06" loading="lazy" onerror="this.onerror=null;this.src='/images/expert-doors/gallery-6.svg';"/>
+          <figcaption>Montaż i pomiar — realizacja 06 (podmień plik: <code>realizacja-06.jpg</code>)</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="formularz">
+      <div class="panel">
+        <h2 class="section-title">Formularz zlecenia</h2>
+        <p>Formularz wysyła dane do Google Apps Script / AppSheet (kolumny dopasowane do arkusza).</p>
+        <form method="POST" action={googleScriptUrl} id="order-form">
+          <label>Imię i nazwisko <input name="Zleceniodawca" type="text" required /></label>
+          <label>Telefon <input name="Telefon" type="tel" required /></label>
+          <label>
+            Lokalizacja realizacji
+            <input name="Adres" type="text" value="Szczecin i okolice" required />
+          </label>
+          <label>
+            Zakres usługi
+            <select name="Typ_montazu" required>
+              <option value="">Wybierz usługę</option>
+              <option>Montaż drzwi wejściowych</option>
+              <option>Montaż drzwi segmentowych</option>
+              <option>Montaż drzwi wewnętrznych</option>
+              <option>Automatyka bram</option>
+              <option>Serwis i regulacje</option>
+              <option>Montaż i pomiar</option>
+            </select>
+          </label>
+          <label>
+            Opis zlecenia
+            <textarea name="Opis" placeholder="Napisz czego potrzebujesz" required></textarea>
+          </label>
+          <input type="hidden" name="ID" value="" />
+          <input type="hidden" name="Numer_zlecenia" value="" />
+          <input type="hidden" name="Klient" value="" />
+          <input type="hidden" name="Termin" value="" />
+          <input type="hidden" name="Status" value="Nowe" />
+          <input type="hidden" name="Zdjecie_przed" value="" />
+          <input type="hidden" name="Zdjecie_po" value="" />
+          <input type="hidden" name="Podpis_klienta" value="" />
+          <input type="hidden" name="Uwagi" value="" />
+          <button type="submit" class="btn primary">Wyślij zlecenie</button>
+          <p id="order-form-status" class="form-status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      Expert Doors · Szczecin i okolice · Montaż drzwi i bram garażowych
+      <div class="cta-row" style="margin-top:.8rem;">
+        <a class="btn secondary" href="/polityka-prywatnosci">Polityka prywatności</a>
+        <a class="btn secondary" href="/regulamin">Regulamin</a>
+        <a class="btn primary" href="tel:+48533801953">📞 Zadzwoń: +48 533 801 953</a>
+        <a class="btn secondary" href="mailto:s.trans.szczecin@gmail.com">✉️ Napisz e-mail</a>
+      </div>
+      <p class="note" style="margin-top:.65rem;">Aby zmienić adres e-mail w przyszłości, podmień `mailto:` w pliku `src/pages/expert-doors.astro`.</p>
+    </div>
+  </footer>
+</MainLayout>
+
+<script>
+
+  const orderForm = document.querySelector('#order-form');
+  const orderStatus = document.querySelector('#order-form-status');
+
+  orderForm?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    if (!(orderForm instanceof HTMLFormElement)) return;
+
+    const submitButton = orderForm.querySelector('button[type="submit"]');
+    if (submitButton instanceof HTMLButtonElement) {
+      submitButton.disabled = true;
+      submitButton.textContent = 'Wysyłanie...';
+    }
+
+    if (orderStatus) {
+      orderStatus.textContent = 'Trwa wysyłanie formularza...';
+      orderStatus.className = 'form-status';
+    }
+
+    const formData = new FormData(orderForm);
+    formData.set('Data_zgloszenia', new Date().toISOString());
+
+    // Zgodność wsteczna: część starszych skryptów GAS czyta stare nazwy pól.
+    formData.set('name', String(formData.get('Zleceniodawca') ?? ''));
+    formData.set('phone', String(formData.get('Telefon') ?? ''));
+    formData.set('location', String(formData.get('Adres') ?? ''));
+    formData.set('service', String(formData.get('Typ_montazu') ?? ''));
+    formData.set('message', String(formData.get('Opis') ?? ''));
+
+    const payload = new URLSearchParams();
+    for (const [key, value] of formData.entries()) {
+      payload.append(key, String(value));
+    }
+
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 12000);
+      const response = await fetch(orderForm.action, {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          Accept: 'application/json, text/plain, */*',
+        },
+        body: payload,
+        signal: controller.signal,
+      });
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
       }
-    });
-  </script>
-</body>
-</html>
+
+      if (orderStatus) {
+        orderStatus.textContent = 'Dziękujemy! Zgłoszenie zostało wysłane i potwierdzone przez serwer.';
+        orderStatus.className = 'form-status success';
+      }
+
+      orderForm.reset();
+      const locationInput = orderForm.querySelector('input[name="Adres"]');
+      if (locationInput instanceof HTMLInputElement) {
+        locationInput.value = 'Szczecin i okolice';
+      }
+    } catch (error) {
+      if (orderStatus) {
+        orderStatus.textContent = 'Nie udało się potwierdzić wysyłki formularza. Sprawdź połączenie lub zadzwoń do nas: +48 533 801 953.';
+        orderStatus.className = 'form-status error';
+      }
+      console.error('Błąd wysyłki formularza:', error);
+    } finally {
+      if (submitButton instanceof HTMLButtonElement) {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Wyślij zlecenie';
+      }
+    }
+  });
+</script>

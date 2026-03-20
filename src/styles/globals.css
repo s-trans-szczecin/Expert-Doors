@@ -128,7 +128,7 @@ header {
 .brand span { color: var(--primary); }
 .brand--logo {
   display: block;
-  width: min(320px, 48vw);
+  width: min(160px, 24vw);
   line-height: 0;
 }
 
@@ -136,6 +136,12 @@ header {
   width: 100%;
   height: auto;
   display: block;
+}
+
+.brand-logo__door-leaf {
+  transform-origin: 128px 116px;
+  transform-box: fill-box;
+  animation: brand-door-swing 3s ease-in-out infinite;
 }
 
 
@@ -153,6 +159,12 @@ header {
   border-radius: 16px;
   padding: 1.2rem;
   backdrop-filter: blur(8px) saturate(120%);
+}
+
+
+@keyframes brand-door-swing {
+  0%, 100% { transform: perspective(400px) rotateY(0deg); }
+  50% { transform: perspective(400px) rotateY(-28deg); }
 }
 
 h1 { margin: 0; font-size: clamp(2rem, 5vw, 3.25rem); line-height: 1.15; }
@@ -691,7 +703,7 @@ footer {
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; }
   .hero { padding-top: 5.1rem; }
-  .brand--logo { width: min(240px, 56vw); }
+  .brand--logo { width: min(120px, 30vw); }
   .orbit-logo {
     position: fixed;
     left: .55rem;

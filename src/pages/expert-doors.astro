@@ -1,7 +1,5 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
-import OrbitGarageLogo from '../components/OrbitGarageLogo.astro';
-
 const googleScriptUrl =
   'https://script.google.com/macros/s/AKfycbyrSjLLM4GyUDMsdI6odVIbr3dD2CncA2uSwnAV7tCqicHyWd6Zp8YjDSLbP8ecFSjW/exec';
 ---
@@ -12,7 +10,18 @@ const googleScriptUrl =
 >
   <header>
     <div class="container nav">
-      <div class="brand">Expert <span>Doors</span></div>
+      <div class="brand brand--logo" aria-label="Expert Doors">
+        <svg viewBox="0 0 560 240" role="img" aria-hidden="true">
+          <rect x="0" y="0" width="560" height="240" fill="transparent" />
+          <path d="M54 34 L128 16 L128 216 L54 198 Z" fill="#232323" stroke="#8f8f8f" stroke-width="2"/>
+          <circle cx="92" cy="126" r="8" fill="#f5f5f5" stroke="#bdbdbd" stroke-width="2"/>
+          <path d="M145 46 H174 V194 H145" fill="none" stroke="#3b3b3b" stroke-width="12" stroke-linecap="square"/>
+          <text x="205" y="112" font-size="114" font-family="Arial Black, Arial, sans-serif" font-weight="900" fill="#202020">Expert</text>
+          <text x="205" y="205" font-size="114" font-family="Arial Black, Arial, sans-serif" font-weight="900" fill="#202020">Doors</text>
+          <text x="205" y="112" font-size="114" font-family="Arial Black, Arial, sans-serif" font-weight="900" fill="#d40000">E</text>
+          <text x="205" y="205" font-size="114" font-family="Arial Black, Arial, sans-serif" font-weight="900" fill="#d40000">D</text>
+        </svg>
+      </div>
       <a href="/pobierz-aplikacje" class="btn secondary">Pobierz aplikację</a>
     </div>
   </header>
@@ -29,7 +38,6 @@ const googleScriptUrl =
           <a class="btn primary" href="#formularz">Wyślij zlecenie online</a>
         </div>
       </div>
-      <OrbitGarageLogo />
     </section>
 
     <section id="oferta">
@@ -140,19 +148,15 @@ const googleScriptUrl =
         <p>Formularz wysyła dane bezpośrednio do Google Apps Script / AppSheet, z polami dopasowanymi do formularza w aplikacji.</p>
         <iframe name="order-form-target" id="order-form-target" title="Ukryty cel wysyłki formularza" hidden></iframe>
         <form method="POST" action={googleScriptUrl} id="order-form" target="order-form-target" accept-charset="UTF-8">
-          <label>Imię i nazwisko <input name="Zleceniodawca" type="text" required /></label>
+          <label>Imię i nazwisko <input name="Imie_i_nazwisko" type="text" required /></label>
           <label>Telefon <input name="Telefon" type="tel" required /></label>
           <label>
             Adres realizacji
-            <input name="Adres" type="text" value="Szczecin i okolice" required />
+            <input name="Adres" type="text" placeholder="Szczecin, ulica, numer" required />
           </label>
           <label>
-            Adres e-mail
-            <input name="Adres_mail" type="email" value="s.trans.szczecin@gmail.com" />
-          </label>
-          <label>
-            Typ montażu
-            <select name="Typ_montazu" required>
+            Zakres usługi
+            <select name="Zakres_usługi" required>
               <option value="">Wybierz usługę</option>
               <option>Montaż drzwi wejściowych</option>
               <option>Montaż drzwi segmentowych</option>
@@ -163,14 +167,25 @@ const googleScriptUrl =
             </select>
           </label>
           <label>
+            Adres e-mail
+            <input name="adres_mail" type="email" placeholder="twoj@email.pl" required />
+          </label>
+          <label>
+            Proponowany termin
+            <input name="Termin_proponowany" type="date" required />
+          </label>
+          <label>
             Opis zlecenia
             <textarea name="Opis_zlecenia" placeholder="Napisz czego potrzebujesz" required></textarea>
+          </label>
+          <label>
+            Dodatkowe uwagi
+            <textarea name="Uwagi" placeholder="Np. dogodna godzina kontaktu, kod do bramy, szczegóły dojazdu"></textarea>
           </label>
           <input type="hidden" name="ID" value="" />
           <input type="hidden" name="Numer_zlecenia" value="" />
           <input type="hidden" name="Data_zgloszenia" value="" />
           <input type="hidden" name="Opis" value="" />
-          <input type="hidden" name="Termin_proponowany" value="" />
           <input type="hidden" name="Termin_zatwierdzony" value="" />
           <input type="hidden" name="Pomiar" value="" />
           <input type="hidden" name="Kosztorys" value="" />
@@ -178,7 +193,6 @@ const googleScriptUrl =
           <input type="hidden" name="Zdjecie_przed" value="" />
           <input type="hidden" name="Zdjecie_po" value="" />
           <input type="hidden" name="Podpis_klienta" value="" />
-          <input type="hidden" name="Uwagi" value="" />
           <button type="submit" class="btn primary">Wyślij zlecenie</button>
           <p id="order-form-status" class="form-status" aria-live="polite"></p>
         </form>
@@ -228,8 +242,6 @@ const googleScriptUrl =
   const restoreDefaults = () => {
     if (!(orderForm instanceof HTMLFormElement)) return;
     orderForm.reset();
-    setFormField('Adres', 'Szczecin i okolice');
-    setFormField('Adres_mail', 's.trans.szczecin@gmail.com');
     setFormField('Status', 'Nowe');
   };
 
@@ -243,9 +255,11 @@ const googleScriptUrl =
       submitButton.textContent = 'Wysyłanie...';
     }
 
-    const opis = String(new FormData(orderForm).get('Opis_zlecenia') ?? '').trim();
-    setFormField('Data_zgloszenia', new Date().toISOString());
-    setFormField('Opis', opis);
+    const now = new Date();
+    const formattedDate = now.toLocaleString('pl-PL');
+    setFormField('ID', `WEB-${Date.now()}`);
+    setFormField('Data_zgloszenia', formattedDate);
+    setFormField('Opis', '');
 
     if (orderStatus) {
       orderStatus.textContent = 'Trwa wysyłanie formularza...';

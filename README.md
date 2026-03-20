@@ -18,7 +18,6 @@ npm run preview
 
 ## Struktura
 
-- `src/components/OrbitGarageLogo.astro` – animowane logo
 - `src/layouts/MainLayout.astro` – główny layout strony
 - `src/styles/globals.css` – globalne style
 - `src/pages/expert-doors.astro` – strona główna
